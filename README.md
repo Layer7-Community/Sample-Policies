@@ -25,5 +25,6 @@ Each new sample should:
 - Be located in "policy" folder or in an appropriate sub-folder where needed to group related policies
 - If a subfolder is used, include a description in the README.md file in the folder with a description of the group
 - Update the README.md on the main folder to add a name and brief description of the policy
+- Comments must be added in the policy with an overview, dependencies and additional guidance if not included in the README or description section above
 
 **Enjoy!**
