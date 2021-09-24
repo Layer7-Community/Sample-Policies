@@ -13,8 +13,7 @@ This repository is for more general policy examples that are typically self-cont
 Each sample policy should be stored in "policy" folder and given a reasonably descriptive name. Most policies will be a single policy. Policies may be grouped into subfolders for examples that are related such as variations on a common them (i.e. encryption, logging, transformation, etc.).
 
 ## Feedback
-We are certainly happy about any feedback on these tutorials, especially if they helped you in your daily work life! We 
-are also available via the [Layer7 Communities](https://community.broadcom.com/enterprisesoftware/communities/communityhomeblogs?CommunityKey=0f580f5f-30a4-41de-a75c-e5f433325a18)
+We are certainly happy about any feedback on these tutorials, especially if they helped you in your daily work life! We are also available via the [Layer7 Communities](https://community.broadcom.com/enterprisesoftware/communities/communityhomeblogs?CommunityKey=0f580f5f-30a4-41de-a75c-e5f433325a18)
 
 ## IMPORTANT
 If any sample policy has an issue, please do not contact Broadcom support. These demos are provided as-is. Please communicate via comments, pull requests and emails to the author of the demo if you have any issues or questions.
