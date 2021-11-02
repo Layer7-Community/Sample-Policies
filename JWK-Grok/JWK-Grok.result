@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<l7:Item xmlns:l7="http://ns.l7tech.com/2010/04/gateway-management">
+    <l7:Name>Bundle mappings</l7:Name>
+    <l7:Type>BUNDLE MAPPINGS</l7:Type>
+    <l7:TimeStamp>2021-11-01T18:03:29.893-07:00</l7:TimeStamp>
+    <l7:Link rel="self" uri="https://ssg94.l7tech.com:8443/restman/1.0/bundle?test=false&amp;activate=true"/>
+    <l7:Resource>
+        <l7:Mappings>
+            <l7:Mapping action="NewOrExisting" actionTaken="UsedExisting" srcId="0000000000000000ffffffffffffec76" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/folders/0000000000000000ffffffffffffec76" targetId="0000000000000000ffffffffffffec76" targetUri="https://ssg94.l7tech.com:8443/restman/1.0/folders/0000000000000000ffffffffffffec76" type="FOLDER">
+                <l7:Properties>
+                    <l7:Property key="FailOnNew">
+                        <l7:BooleanValue>true</l7:BooleanValue>
+                    </l7:Property>
+                </l7:Properties>
+            </l7:Mapping>
+            <l7:Mapping action="NewOrExisting" actionTaken="CreatedNew" srcId="6ee2107e4cfec877a60af21e920d422b" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/folders/6ee2107e4cfec877a60af21e920d422b" targetId="6ee2107e4cfec877a60af21e920d422b" targetUri="https://ssg94.l7tech.com:8443/restman/1.0/folders/6ee2107e4cfec877a60af21e920d422b" type="FOLDER"/>
+            <l7:Mapping action="NewOrExisting" actionTaken="CreatedNew" srcId="00000000000000000000000000000002:sender" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/privateKeys/00000000000000000000000000000002:sender" targetId="00000000000000000000000000000002:sender" targetUri="https://ssg94.l7tech.com:8443/restman/1.0/privateKeys/00000000000000000000000000000002:sender" type="SSG_KEY_ENTRY"/>
+            <l7:Mapping action="NewOrExisting" actionTaken="UsedExisting" srcId="00000000000000000000000000000002:SSL" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/privateKeys/00000000000000000000000000000002:SSL" targetId="00000000000000000000000000000002:SSL" targetUri="https://ssg94.l7tech.com:8443/restman/1.0/privateKeys/00000000000000000000000000000002:SSL" type="SSG_KEY_ENTRY"/>
+            <l7:Mapping action="NewOrExisting" actionTaken="CreatedNew" srcId="4d23c5abba6cc6e62e4672c65385d211" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/services/4d23c5abba6cc6e62e4672c65385d211" targetId="4d23c5abba6cc6e62e4672c65385d211" targetUri="https://ssg94.l7tech.com:8443/restman/1.0/services/4d23c5abba6cc6e62e4672c65385d211" type="SERVICE"/>
+            <l7:Mapping action="NewOrExisting" actionTaken="CreatedNew" srcId="00000000000000000000000000000002:recipient" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/privateKeys/00000000000000000000000000000002:recipient" targetId="00000000000000000000000000000002:recipient" targetUri="https://ssg94.l7tech.com:8443/restman/1.0/privateKeys/00000000000000000000000000000002:recipient" type="SSG_KEY_ENTRY"/>
+            <l7:Mapping action="NewOrExisting" actionTaken="CreatedNew" srcId="6ee2107e4cfec877a60af21e920d4271" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/services/6ee2107e4cfec877a60af21e920d4271" targetId="6ee2107e4cfec877a60af21e920d4271" targetUri="https://ssg94.l7tech.com:8443/restman/1.0/services/6ee2107e4cfec877a60af21e920d4271" type="SERVICE"/>
+        </l7:Mappings>
+    </l7:Resource>
+</l7:Item>

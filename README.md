@@ -5,8 +5,8 @@ This repository is for more general policy examples that are typically self-cont
 
 |Name|Brief Description|
 |-----|-----------------|
-|sample|This is a sample policy containing a single comment as used to provide an example of how policies should be described and stored in this repository.|
-
+|[**sample**](./policy)|This is a sample policy containing a single comment as used to provide an example of how policies should be described and stored in this repository.|
+|[**JWK Grok**](./JWK-Grok)|JWK-Grok is a set of two API Gateway services to help understand how the JOSE features of the API Gateway work.|
 
 ## Using the Repository
 
