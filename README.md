@@ -9,6 +9,7 @@ This repository is for more general policy examples that are typically self-cont
 |[**Restman Policy**](./Restman-Policy)|A replacement policy for the default Gateway REST Management Service that has better documentation, error handling and inline comments.|
 |[**JWK Grok**](./JWK-Grok)|JWK-Grok is a set of two API Gateway services to help understand how the JOSE features of the API Gateway work.|
 |[**Log4Shell**](./log4shell)|Simple filter that looks for a pattern which may be indicative of a log4shell exploit.|
+|[**GraphQL Patterns Today**](./graphqlToday)|Proxying GraphQL API in Layer7 Policy prior to new GraphQL assertions|
 
 ## Using the Repository
 
