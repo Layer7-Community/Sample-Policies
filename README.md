@@ -10,7 +10,7 @@ This repository is for more general policy examples that are typically self-cont
 |[**JWK Grok**](./JWK-Grok)|JWK-Grok is a set of two API Gateway services to help understand how the JOSE features of the API Gateway work.|
 |[**Log4Shell**](./log4shell)|Simple filter that looks for a pattern which may be indicative of a log4shell exploit.|
 |[**GraphQL Patterns Today**](./graphqlToday)|Proxying GraphQL API in Layer7 Policy prior to new GraphQL assertions|
-|[**Cluster Wide Property Manager**](./Cluster-wide-property-manager)|Uses the REST Manage Gateway assertion to provide a simple web page interface to create, update and delete cluster wide properties|
+|[**Cluster Wide Property Manager**](./Cluster-wide-property-manager)|This uses the REST Manage Gateway assertion to provide a simple web page interface to create, update and delete cluster wide properties|
 
 
 ## Using the Repository
