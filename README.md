@@ -11,7 +11,7 @@ This repository is for more general policy examples that are typically self-cont
 |[**Log4Shell**](./log4shell)|Simple filter that looks for a pattern which may be indicative of a log4shell exploit.|
 |[**GraphQL Patterns Today**](./graphqlToday)|Proxying GraphQL API in Layer7 Policy prior to new GraphQL assertions|
 |[**Cluster Wide Property Manager**](./Cluster-wide-property-manager)|This uses the REST Manage Gateway assertion to provide a simple web page interface to create, update and delete cluster wide properties|
-|[**Trusted Certificate Viewer**](./Cluster-wide-property-manager)|THis polcy uses the  REST Manage Gateway assertion to provide a simple web page interface to view all the trusted certificates and the expiry date|
+|[**Trusted Certificate Viewer**](./trusted-certs-viewer)|This polcy uses the  REST Manage Gateway assertion to provide a simple web page interface to view all the trusted certificates and the expiry date|
 
 
 ## Using the Repository
