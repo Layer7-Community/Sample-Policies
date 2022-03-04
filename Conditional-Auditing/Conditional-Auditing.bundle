@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<l7:Bundle xmlns:l7="http://ns.l7tech.com/2010/04/gateway-management">
+    <l7:References>
+        <l7:Item>
+            <l7:Name>Conditional Auditing</l7:Name>
+            <l7:Id>7a325eb8051b7a4d13bf9fed9e4a9b23</l7:Id>
+            <l7:Type>FOLDER</l7:Type>
+            <l7:TimeStamp>2022-03-04T14:59:05.827-08:00</l7:TimeStamp>
+            <l7:Resource>
+                <l7:Folder folderId="0000000000000000ffffffffffffec76" id="7a325eb8051b7a4d13bf9fed9e4a9b23" version="0">
+                    <l7:Name>Conditional Auditing</l7:Name>
+                </l7:Folder>
+            </l7:Resource>
+        </l7:Item>
+        <l7:Item>
+            <l7:Name>audit.services</l7:Name>
+            <l7:Id>d01edc5360e402447d935a5a77d3b7ba</l7:Id>
+            <l7:Type>CLUSTER_PROPERTY</l7:Type>
+            <l7:TimeStamp>2022-03-04T14:59:05.827-08:00</l7:TimeStamp>
+            <l7:Resource>
+                <l7:ClusterProperty id="d01edc5360e402447d935a5a77d3b7ba" version="6">
+                    <l7:Name>audit.services</l7:Name>
+                    <l7:Value>null</l7:Value>
+                </l7:ClusterProperty>
+            </l7:Resource>
+        </l7:Item>
+        <l7:Item>
+            <l7:Name>Conditional Audit Messages in Policy</l7:Name>
+            <l7:Id>d01edc5360e402447d935a5a77d3affa</l7:Id>
+            <l7:Type>POLICY</l7:Type>
+            <l7:TimeStamp>2022-03-04T14:59:05.835-08:00</l7:TimeStamp>
+            <l7:Resource>
+                <l7:Policy guid="923caa31-cfda-4415-b64d-c6836c5fb4b7" id="d01edc5360e402447d935a5a77d3affa" version="6">
+                    <l7:PolicyDetail folderId="7a325eb8051b7a4d13bf9fed9e4a9b23" guid="923caa31-cfda-4415-b64d-c6836c5fb4b7" id="d01edc5360e402447d935a5a77d3affa" version="6">
+                        <l7:Name>Conditional Audit Messages in Policy</l7:Name>
+                        <l7:PolicyType>Include</l7:PolicyType>
+                        <l7:Properties>
+                            <l7:Property key="revision">
+                                <l7:LongValue>7</l7:LongValue>
+                            </l7:Property>
+                            <l7:Property key="soap">
+                                <l7:BooleanValue>false</l7:BooleanValue>
+                            </l7:Property>
+                        </l7:Properties>
+                    </l7:PolicyDetail>
+                    <l7:Resources>
+                        <l7:ResourceSet tag="policy">
+                            <l7:Resource type="policy">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy"&gt;
+    &lt;wsp:All wsp:Usage="Required"&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="**************************************************************************************************"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* Policy for Conditional Auditi Message in Policy encapsulated assertion"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* "/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* Check if ${service.oid} is in ${gateway.audit.services} and enable auditing if so"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* "/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* audit.services is a cluster property with space delimited list of oids that will be audited"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* --&gt; See Service Properties to determine a service's oid"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* "/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* Use this in the global Pre-Service policy or at the beginning of any service policy."/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* "/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* Jay MacDonald - 20220304"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="**************************************************************************************************"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;wsp:OneOrMore wsp:Usage="Required"&gt;
+            &lt;L7p:ComparisonAssertion&gt;
+                &lt;L7p:Expression1 stringValue="${gateway.audit.services}"/&gt;
+                &lt;L7p:Expression2 stringValue="${service.oid}"/&gt;
+                &lt;L7p:Negate booleanValue="true"/&gt;
+                &lt;L7p:Operator operator="CONTAINS"/&gt;
+                &lt;L7p:Predicates predicates="included"&gt;
+                    &lt;L7p:item binary="included"&gt;
+                        &lt;L7p:Negated booleanValue="true"/&gt;
+                        &lt;L7p:Operator operator="CONTAINS"/&gt;
+                        &lt;L7p:RightValue stringValue="${service.oid}"/&gt;
+                    &lt;/L7p:item&gt;
+                &lt;/L7p:Predicates&gt;
+            &lt;/L7p:ComparisonAssertion&gt;
+            &lt;L7p:AuditAssertion/&gt;
+            &lt;L7p:assertionComment&gt;
+                &lt;L7p:Properties mapValue="included"&gt;
+                    &lt;L7p:entry&gt;
+                        &lt;L7p:key stringValue="RIGHT.COMMENT"/&gt;
+                        &lt;L7p:value stringValue="// Check if service is in the CWP and turn on Audit Messages in Policy if so"/&gt;
+                    &lt;/L7p:entry&gt;
+                &lt;/L7p:Properties&gt;
+            &lt;/L7p:assertionComment&gt;
+        &lt;/wsp:OneOrMore&gt;
+    &lt;/wsp:All&gt;
+&lt;/wsp:Policy&gt;
+</l7:Resource>
+                        </l7:ResourceSet>
+                    </l7:Resources>
+                </l7:Policy>
+            </l7:Resource>
+        </l7:Item>
+        <l7:Item>
+            <l7:Name>Conditional Audit Messages in Policy</l7:Name>
+            <l7:Id>d01edc5360e402447d935a5a77d3b0cf</l7:Id>
+            <l7:Type>ENCAPSULATED_ASSERTION</l7:Type>
+            <l7:TimeStamp>2022-03-04T14:59:05.835-08:00</l7:TimeStamp>
+            <l7:Resource>
+                <l7:EncapsulatedAssertion id="d01edc5360e402447d935a5a77d3b0cf" version="1">
+                    <l7:Name>Conditional Audit Messages in Policy</l7:Name>
+                    <l7:Guid>07c5e85b-0fae-4372-8272-ce95f7685149</l7:Guid>
+                    <l7:PolicyReference id="d01edc5360e402447d935a5a77d3affa" resourceUri="http://ns.l7tech.com/2010/04/gateway-management/policies"/>
+                    <l7:EncapsulatedArguments/>
+                    <l7:EncapsulatedResults/>
+                    <l7:Properties>
+                        <l7:Property key="allowTracing">
+                            <l7:StringValue>false</l7:StringValue>
+                        </l7:Property>
+                        <l7:Property key="description">
+                            <l7:StringValue>Check if ${service.oid} is in ${gateway.audit.services} and enable auditing if so</l7:StringValue>
+                        </l7:Property>
+                        <l7:Property key="paletteFolder">
+                            <l7:StringValue>internalAssertions</l7:StringValue>
+                        </l7:Property>
+                        <l7:Property key="paletteIconResourceName">
+                            <l7:StringValue>Edit16.gif</l7:StringValue>
+                        </l7:Property>
+                        <l7:Property key="passMetricsToParent">
+                            <l7:StringValue>false</l7:StringValue>
+                        </l7:Property>
+                        <l7:Property key="policyGuid">
+                            <l7:StringValue>923caa31-cfda-4415-b64d-c6836c5fb4b7</l7:StringValue>
+                        </l7:Property>
+                    </l7:Properties>
+                </l7:EncapsulatedAssertion>
+            </l7:Resource>
+        </l7:Item>
+        <l7:Item>
+            <l7:Name>Demonstrate Conditional Auditing</l7:Name>
+            <l7:Id>7a325eb8051b7a4d13bf9fed9e4a9a76</l7:Id>
+            <l7:Type>SERVICE</l7:Type>
+            <l7:TimeStamp>2022-03-04T14:59:05.839-08:00</l7:TimeStamp>
+            <l7:Resource>
+                <l7:Service id="7a325eb8051b7a4d13bf9fed9e4a9a76" version="3">
+                    <l7:ServiceDetail folderId="7a325eb8051b7a4d13bf9fed9e4a9b23" id="7a325eb8051b7a4d13bf9fed9e4a9a76" version="3">
+                        <l7:Name>Demonstrate Conditional Auditing</l7:Name>
+                        <l7:Enabled>true</l7:Enabled>
+                        <l7:ServiceMappings>
+                            <l7:HttpMapping>
+                                <l7:UrlPattern>/demo/conditionalAudit</l7:UrlPattern>
+                                <l7:Verbs>
+                                    <l7:Verb>GET</l7:Verb>
+                                    <l7:Verb>POST</l7:Verb>
+                                    <l7:Verb>PUT</l7:Verb>
+                                    <l7:Verb>DELETE</l7:Verb>
+                                </l7:Verbs>
+                            </l7:HttpMapping>
+                        </l7:ServiceMappings>
+                        <l7:Properties>
+                            <l7:Property key="internal">
+                                <l7:BooleanValue>false</l7:BooleanValue>
+                            </l7:Property>
+                            <l7:Property key="policyRevision">
+                                <l7:LongValue>13</l7:LongValue>
+                            </l7:Property>
+                            <l7:Property key="soap">
+                                <l7:BooleanValue>false</l7:BooleanValue>
+                            </l7:Property>
+                            <l7:Property key="tracingEnabled">
+                                <l7:BooleanValue>false</l7:BooleanValue>
+                            </l7:Property>
+                            <l7:Property key="wssProcessingEnabled">
+                                <l7:BooleanValue>false</l7:BooleanValue>
+                            </l7:Property>
+                        </l7:Properties>
+                    </l7:ServiceDetail>
+                    <l7:Resources>
+                        <l7:ResourceSet tag="policy">
+                            <l7:Resource type="policy" version="12">&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy"&gt;
+    &lt;wsp:All wsp:Usage="Required"&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="*******************************************************************************"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* Policy to demonstrate Conditional Auditing"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* "/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="* Jay MacDonald - 20220304"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:CommentAssertion&gt;
+            &lt;L7p:Comment stringValue="*******************************************************************************"/&gt;
+        &lt;/L7p:CommentAssertion&gt;
+        &lt;L7p:Encapsulated&gt;
+            &lt;L7p:EncapsulatedAssertionConfigGuid stringValue="07c5e85b-0fae-4372-8272-ce95f7685149"/&gt;
+            &lt;L7p:EncapsulatedAssertionConfigName stringValue="Conditional Audit Messages in Policy"/&gt;
+        &lt;/L7p:Encapsulated&gt;
+        &lt;wsp:OneOrMore wsp:Usage="Required"&gt;
+            &lt;wsp:All wsp:Usage="Required"&gt;
+                &lt;L7p:ComparisonAssertion&gt;
+                    &lt;L7p:CaseSensitive booleanValue="false"/&gt;
+                    &lt;L7p:Expression1 stringValue="${auditLevel}"/&gt;
+                    &lt;L7p:Operator operatorNull="null"/&gt;
+                    &lt;L7p:Predicates predicates="included"&gt;
+                        &lt;L7p:item dataType="included"&gt;
+                            &lt;L7p:Type variableDataType="string"/&gt;
+                        &lt;/L7p:item&gt;
+                        &lt;L7p:item binary="included"&gt;
+                            &lt;L7p:RightValue stringValue="WARNING"/&gt;
+                        &lt;/L7p:item&gt;
+                    &lt;/L7p:Predicates&gt;
+                &lt;/L7p:ComparisonAssertion&gt;
+                &lt;L7p:SetVariable&gt;
+                    &lt;L7p:Base64Expression stringValue="VGhpcyByZXF1ZXN0IHNob3VsZCBoYXZlIHRyaWdnZXJlZCBhbiBhdWRpdA=="/&gt;
+                    &lt;L7p:VariableToSet stringValue="message"/&gt;
+                &lt;/L7p:SetVariable&gt;
+                &lt;L7p:assertionComment&gt;
+                    &lt;L7p:Properties mapValue="included"&gt;
+                        &lt;L7p:entry&gt;
+                            &lt;L7p:key stringValue="RIGHT.COMMENT"/&gt;
+                            &lt;L7p:value stringValue="// ${auditLevel} == WARNING"/&gt;
+                        &lt;/L7p:entry&gt;
+                    &lt;/L7p:Properties&gt;
+                &lt;/L7p:assertionComment&gt;
+            &lt;/wsp:All&gt;
+            &lt;L7p:SetVariable&gt;
+                &lt;L7p:Base64Expression stringValue="VGhpcyByZXF1ZXN0IHNob3VsZCBub3QgaGF2ZSB0cmlnZ2VyZWQgYW4gYXVkaXQ="/&gt;
+                &lt;L7p:VariableToSet stringValue="message"/&gt;
+            &lt;/L7p:SetVariable&gt;
+            &lt;L7p:assertionComment&gt;
+                &lt;L7p:Properties mapValue="included"&gt;
+                    &lt;L7p:entry&gt;
+                        &lt;L7p:key stringValue="RIGHT.COMMENT"/&gt;
+                        &lt;L7p:value stringValue="// Set ${message} for the response"/&gt;
+                    &lt;/L7p:entry&gt;
+                &lt;/L7p:Properties&gt;
+            &lt;/L7p:assertionComment&gt;
+        &lt;/wsp:OneOrMore&gt;
+        &lt;L7p:HardcodedResponse&gt;
+            &lt;L7p:Base64ResponseBody stringValue="YXVkaXRMZXZlbCA9ICR7YXVkaXRMZXZlbH0KCmF1ZGl0LnNlcnZpY2VzIHByb3BlcnR5ID0gJHtnYXRld2F5LmF1ZGl0LnNlcnZpY2VzfQoKJHttZXNzYWdlfQoKVG8gZW5hYmxlIGNvbmRpdGlvbmFsIGF1ZGl0aW5nIGZvciB0aGlzIHNlcnZpY2UsIGFkZCAke3NlcnZpY2Uub2lkfSB0byBhdWRpdC5zZXJ2aWNlcyBjbHVzdGVyLXdpZGUgcHJvcGVydHkgKHNwYWNlIGRlbGltaXRlZCku"/&gt;
+            &lt;L7p:ResponseContentType stringValue="text/plain; charset=UTF-8"/&gt;
+        &lt;/L7p:HardcodedResponse&gt;
+    &lt;/wsp:All&gt;
+&lt;/wsp:Policy&gt;
+</l7:Resource>
+                        </l7:ResourceSet>
+                    </l7:Resources>
+                </l7:Service>
+            </l7:Resource>
+        </l7:Item>
+    </l7:References>
+    <l7:Mappings>
+        <l7:Mapping action="NewOrExisting" srcId="0000000000000000ffffffffffffec76" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/folders/0000000000000000ffffffffffffec76" type="FOLDER">
+            <l7:Properties>
+                <l7:Property key="FailOnNew">
+                    <l7:BooleanValue>true</l7:BooleanValue>
+                </l7:Property>
+            </l7:Properties>
+        </l7:Mapping>
+        <l7:Mapping action="NewOrUpdate" srcId="7a325eb8051b7a4d13bf9fed9e4a9b23" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/folders/7a325eb8051b7a4d13bf9fed9e4a9b23" type="FOLDER"/>
+        <l7:Mapping action="NewOrUpdate" srcId="d01edc5360e402447d935a5a77d3b7ba" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/clusterProperties/d01edc5360e402447d935a5a77d3b7ba" type="CLUSTER_PROPERTY">
+            <l7:Properties>
+                <l7:Property key="MapBy">
+                    <l7:StringValue>name</l7:StringValue>
+                </l7:Property>
+            </l7:Properties>
+        </l7:Mapping>
+        <l7:Mapping action="NewOrUpdate" srcId="d01edc5360e402447d935a5a77d3affa" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/policies/d01edc5360e402447d935a5a77d3affa" type="POLICY"/>
+        <l7:Mapping action="NewOrUpdate" srcId="d01edc5360e402447d935a5a77d3b0cf" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/encapsulatedAssertions/d01edc5360e402447d935a5a77d3b0cf" type="ENCAPSULATED_ASSERTION"/>
+        <l7:Mapping action="NewOrUpdate" srcId="7a325eb8051b7a4d13bf9fed9e4a9a76" srcUri="https://ssg100.l7tech.com:8443/restman/1.0/services/7a325eb8051b7a4d13bf9fed9e4a9a76" type="SERVICE"/>
+    </l7:Mappings>
+</l7:Bundle>

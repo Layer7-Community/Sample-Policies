@@ -8,6 +8,7 @@ This repository is for more general policy examples that are typically self-cont
 |[**sample**](./policy)|This is a sample policy containing a single comment as used to provide an example of how policies should be described and stored in this repository.|
 |[**Restman Policy**](./Restman-Policy)|A replacement policy for the default Gateway REST Management Service that has better documentation, error handling and inline comments.|
 |[**JWK Grok**](./JWK-Grok)|JWK-Grok is a set of two API Gateway services to help understand how the JOSE features of the API Gateway work.|
+|[**Conditional Auditing**](./Conditional-Auditing)|Enable auditing for specific services via a cluster-wide property|
 
 ## Using the Repository
 
