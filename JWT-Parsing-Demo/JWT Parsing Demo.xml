@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exp:Export Version="3.0"
+    xmlns:L7p="http://www.layer7tech.com/ws/policy"
+    xmlns:exp="http://www.layer7tech.com/ws/policy/export" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <exp:References/>
+    <wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+        <wsp:All wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="**************************************************************************************************************"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* Demonstrate parsing a JWT"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* "/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* Jay MacDonald - 20220329"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="**************************************************************************************************************"/>
+            </L7p:CommentAssertion>
+            <L7p:AuditAssertion/>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Set a JWT to work with"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKdWIyNWxJbjAuZXcwS0lDQWljM1ZpSWpvZ0lrcGhlVTFoWXlJc0RRb2dJQ0p1WVcxbElqb2dJa3BoZVNCTllXTkViMjVoYkdRaUxBMEtJQ0FpZEdWc1pYQm9iMjVsVG5WdFltVnlJam9nSWpZd05DMDFOVFV0TVRJeE1pSXNEUW9nSUNKdFlXbHNJam9nSW1waGVTNXRZV05rYjI1aGJHUkFZbkp2WVdSamIyMHVZMjl0SWcwS2ZRLg=="/>
+                <L7p:VariableToSet stringValue="jwt.token"/>
+            </L7p:SetVariable>
+            <L7p:DecodeJsonWebToken>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Parse the JWT"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:FailUnverifiedSignature booleanValue="true"/>
+                <L7p:SourcePayload stringValue="${jwt.token}"/>
+                <L7p:TargetVariablePrefix stringValue="jwt"/>
+                <L7p:ValidationType stringValue="None"/>
+            </L7p:DecodeJsonWebToken>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Cast header to message type"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtqd3QuaGVhZGVyfQ=="/>
+                <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                <L7p:DataType variableDataType="message"/>
+                <L7p:VariableToSet stringValue="jwt.header.json"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Cast payload to message type"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtqd3QucGF5bG9hZH0="/>
+                <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                <L7p:DataType variableDataType="message"/>
+                <L7p:VariableToSet stringValue="jwt.payload.json"/>
+            </L7p:SetVariable>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Extract typ field from header"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Expression stringValue="typ"/>
+                <L7p:OtherTargetMessageVariable stringValue="jwt.header.json"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:VariablePrefix stringValue="jwt.typ"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Extract alg field from header"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Expression stringValue="alg"/>
+                <L7p:OtherTargetMessageVariable stringValue="jwt.header.json"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:VariablePrefix stringValue="jwt.alg"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Extract sub field from payload"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Expression stringValue="sub"/>
+                <L7p:OtherTargetMessageVariable stringValue="jwt.payload.json"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:VariablePrefix stringValue="jwt.sub"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Extract name field from payload"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Expression stringValue="name"/>
+                <L7p:OtherTargetMessageVariable stringValue="jwt.payload.json"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:VariablePrefix stringValue="jwt.name"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Extract telephoneNumber field from payload"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Expression stringValue="telephoneNumber"/>
+                <L7p:OtherTargetMessageVariable stringValue="jwt.payload.json"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:VariablePrefix stringValue="jwt.telephoneNumber"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:EvaluateJsonPathExpression>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Extract mail field from payload"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Expression stringValue="mail"/>
+                <L7p:OtherTargetMessageVariable stringValue="jwt.payload.json"/>
+                <L7p:Target target="OTHER"/>
+                <L7p:VariablePrefix stringValue="jwt.mail"/>
+            </L7p:EvaluateJsonPathExpression>
+            <L7p:HardcodedResponse>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Return the results (text/plain)"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64ResponseBody stringValue="SldUIFRva2VuOiAke2p3dC50b2tlbn0KCkpXVCBIZWFkZXI6CiR7and0LmhlYWRlcn0KCkluZm9ybWF0aW9uIGV4dHJhY3RlZCBmcm9tIHRoZSBKV1QgSGVhZGVyOgogIHR5cCAgICAgICAgICAgICA9ICR7and0LnR5cC5yZXN1bHR9CiAgYWxnICAgICAgICAgICAgID0gJHtqd3QuYWxnLnJlc3VsdH0KCkpXVCBQYXlsb2FkOgoke2p3dC5wYXlsb2FkfQoKSW5mb3JtYXRpb24gZXh0cmFjdGVkIGZyb20gdGhlIEpXVCBQYXlsb2FkOgogIHN1YiAgICAgICAgICAgICA9ICR7and0LnN1Yi5yZXN1bHR9CiAgbmFtZSAgICAgICAgICAgID0gJHtqd3QubmFtZS5yZXN1bHR9CiAgdGVsZXBob25lTnVtYmVyID0gJHtqd3QudGVsZXBob25lTnVtYmVyLnJlc3VsdH0KICBtYWlsICAgICAgICAgICAgPSAke2p3dC5tYWlsLnJlc3VsdH0="/>
+                <L7p:ResponseContentType stringValue="text/plain; charset=UTF-8"/>
+            </L7p:HardcodedResponse>
+        </wsp:All>
+    </wsp:Policy>
+</exp:Export>
