@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exp:Export Version="3.0"
+    xmlns:L7p="http://www.layer7tech.com/ws/policy"
+    xmlns:exp="http://www.layer7tech.com/ws/policy/export" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <exp:References/>
+    <wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+        <wsp:All wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="===================="/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Proxy GraphQL requests to backend GraphQL"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Check max graph query nesting"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Ignore introspections"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="===================="/>
+            </L7p:CommentAssertion>
+            <L7p:CustomizeErrorResponse>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="set error parsing"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Content stringValueReference="inline"><![CDATA[{
+  "error" : "error parsing request"
+}]]></L7p:Content>
+                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                <L7p:HttpStatus stringValue="400"/>
+            </L7p:CustomizeErrorResponse>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <L7p:ComparisonAssertion>
+                    <L7p:AssertionComment assertionComment="included">
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="ignore introspection"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:AssertionComment>
+                    <L7p:CaseSensitive booleanValue="false"/>
+                    <L7p:Expression1 stringValue="${request.mainpart}"/>
+                    <L7p:Operator operatorNull="null"/>
+                    <L7p:Predicates predicates="included">
+                        <L7p:item dataType="included">
+                            <L7p:Type variableDataType="string"/>
+                        </L7p:item>
+                        <L7p:item binary="included">
+                            <L7p:Operator operator="CONTAINS"/>
+                            <L7p:RightValue stringValue="IntrospectionQuery"/>
+                        </L7p:item>
+                    </L7p:Predicates>
+                </L7p:ComparisonAssertion>
+                <wsp:All wsp:Usage="Required">
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:EvaluateJsonPathExpressionV2>
+                                <L7p:Evaluator stringValue="JsonPath"/>
+                                <L7p:Expression stringValue="$.query"/>
+                                <L7p:VariablePrefix stringValue="res"/>
+                            </L7p:EvaluateJsonPathExpressionV2>
+                            <L7p:SetVariable>
+                                <L7p:Base64Expression stringValue="JHtyZXMucmVzdWx0fQ=="/>
+                                <L7p:VariableToSet stringValue="graphql_query"/>
+                            </L7p:SetVariable>
+                        </wsp:All>
+                        <L7p:SetVariable>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="var"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Base64Expression stringValue=""/>
+                            <L7p:VariableToSet stringValue="graphql_query"/>
+                        </L7p:SetVariable>
+                    </wsp:OneOrMore>
+                    <L7p:JavaScript>
+                        <L7p:AssertionComment assertionComment="included">
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="parse"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="and count nesting along the way"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:AssertionComment>
+                        <L7p:ExecutionTimeout stringValue=""/>
+                        <L7p:Name stringValue="analyze_query"/>
+                        <L7p:Script stringValueReference="inline"><![CDATA[// read the graphql query from the context (contract)
+var query = context.getVariable("graphql_query");
+
+// traverse the entire query and look for things
+var currentNestingLevel = 0;
+var highestNestingLevelEncountered = 0;
+for (var i = 0; i < query.length; i++) {
+  if (query.charAt(i) == '{') {
+  	currentNestingLevel = currentNestingLevel + 1;
+  	if (currentNestingLevel > highestNestingLevelEncountered) {
+  	  highestNestingLevelEncountered = currentNestingLevel;
+  	}
+  } else if (query.charAt(i) == '}') {
+  	currentNestingLevel = currentNestingLevel - 1;
+  }
+}
+context.setVariable("nested", highestNestingLevelEncountered);]]></L7p:Script>
+                    </L7p:JavaScript>
+                    <L7p:ComparisonAssertion>
+                        <L7p:AssertionComment assertionComment="included">
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="LEFT.COMMENT"/>
+                                    <L7p:value stringValue="fail if above max nesting"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:AssertionComment>
+                        <L7p:CaseSensitive booleanValue="false"/>
+                        <L7p:Expression1 stringValue="${nested}"/>
+                        <L7p:ExpressionIsVariable booleanValue="false"/>
+                        <L7p:Operator operatorNull="null"/>
+                        <L7p:Predicates predicates="included">
+                            <L7p:item dataType="included">
+                                <L7p:Type variableDataType="int"/>
+                            </L7p:item>
+                            <L7p:item binary="included">
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Operator operator="LE"/>
+                                <L7p:RightValue stringValue="100"/>
+                            </L7p:item>
+                        </L7p:Predicates>
+                    </L7p:ComparisonAssertion>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="validate query"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="ignore introspection"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+            <L7p:CustomizeErrorResponse>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="set error route"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Content stringValueReference="inline"><![CDATA[{
+  "error" : "cannot reach graphql backend"
+}]]></L7p:Content>
+                <L7p:ContentType stringValue="application/json; charset=UTF-8"/>
+                <L7p:ExtraHeaders nameValuePairArray="included"/>
+                <L7p:HttpStatus stringValue="400"/>
+            </L7p:CustomizeErrorResponse>
+            <L7p:HttpRoutingAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="actual backend call"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:FailOnErrorStatus booleanValue="false"/>
+                <L7p:ProtectedServiceUrl stringValue="http://host.docker.internal:4000/"/>
+                <L7p:ProxyPassword stringValueNull="null"/>
+                <L7p:ProxyUsername stringValueNull="null"/>
+                <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included">
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="Cookie"/>
+                        </L7p:item>
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="SOAPAction"/>
+                        </L7p:item>
+                    </L7p:Rules>
+                </L7p:RequestHeaderRules>
+                <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included"/>
+                </L7p:RequestParamRules>
+                <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included">
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="Set-Cookie"/>
+                        </L7p:item>
+                    </L7p:Rules>
+                </L7p:ResponseHeaderRules>
+                <L7p:SamlAssertionVersion intValue="2"/>
+            </L7p:HttpRoutingAssertion>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:EvaluateJsonPathExpression>
+                        <L7p:Expression stringValue="$.errors[0].extensions.exception"/>
+                        <L7p:Target target="RESPONSE"/>
+                    </L7p:EvaluateJsonPathExpression>
+                    <L7p:JavaScript>
+                        <L7p:ExecutionTimeout stringValue=""/>
+                        <L7p:Name stringValue="redact_stack_trace"/>
+                        <L7p:Script stringValueReference="inline"><![CDATA[var responseRaw = context.getVariable("response.mainpart");
+var gqlerror = JSON.parse(responseRaw);
+gqlerror.errors[0].extensions.redacted = "yes";
+delete gqlerror.errors[0].extensions.exception.stacktrace;
+var output = JSON.stringify(gqlerror);
+context.setVariable("redactedGraphqlError", output);]]></L7p:Script>
+                    </L7p:JavaScript>
+                    <L7p:HardcodedResponse>
+                        <L7p:Base64ResponseBody stringValue="JHtyZWRhY3RlZEdyYXBocWxFcnJvcn0="/>
+                        <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+                    </L7p:HardcodedResponse>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="LEFT.COMMENT"/>
+                                <L7p:value stringValue="hide stack trace"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <L7p:TrueAssertion/>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="LEFT.COMMENT"/>
+                            <L7p:value stringValue="Check for error"/>
+                        </L7p:entry>
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="containing stack trace"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+        </wsp:All>
+    </wsp:Policy>
+</exp:Export>

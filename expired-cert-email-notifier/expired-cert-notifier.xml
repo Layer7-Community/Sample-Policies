@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exp:Export Version="3.0"
+    xmlns:L7p="http://www.layer7tech.com/ws/policy"
+    xmlns:exp="http://www.layer7tech.com/ws/policy/export" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <exp:References/>
+    <wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+        <wsp:All wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Policy Fragment: Sheduled email checker"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="Policy Fragment: Cert Check with email"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="******************************************************************"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="*****  Policy to run on a schedule and check certs"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="***** Deploy as a scheduled policy, run as admin user"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="***** emails warnings- It recommended to use a securley stored password email auth"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="*****  A.White Jan 2022"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="*********************************************************"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="*********************************************************"/>
+            </L7p:CommentAssertion>
+            <wsp:All wsp:Usage="Required">
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue=""/>
+                    <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                    <L7p:DataType variableDataType="message"/>
+                    <L7p:VariableToSet stringValue="RESTCALL"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="c210cC5tYWlsZG9tYWluLmNvbQ=="/>
+                    <L7p:VariableToSet stringValue="emailHost"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="dXNlckBtYWlsLmNvbQ=="/>
+                    <L7p:VariableToSet stringValue="emailAutheticationUser"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="dXNlckBtYWlsLmNvbQ=="/>
+                    <L7p:VariableToSet stringValue="emailFromAddress"/>
+                </L7p:SetVariable>
+                <L7p:SetVariable>
+                    <L7p:Base64Expression stringValue="dXNlckBtYWlsLmNvbQ=="/>
+                    <L7p:VariableToSet stringValue="emailToAddress"/>
+                </L7p:SetVariable>
+            </wsp:All>
+            <wsp:All wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="MS4wL3RydXN0ZWRDZXJ0aWZpY2F0ZXM="/>
+                        <L7p:VariableToSet stringValue="restGatewayMan.uri"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="R0VU"/>
+                        <L7p:VariableToSet stringValue="restGatewayMan.action"/>
+                    </L7p:SetVariable>
+                    <L7p:RESTGatewayManagement>
+                        <L7p:OtherTargetMessageVariable stringValue="RESTCALL"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:RESTGatewayManagement>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="ID"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:List/l7:Item/l7:Id"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                </wsp:All>
+                <L7p:ForEachLoop L7p:Usage="Required"
+                    loopVariable="ID.results" variablePrefix="NOW">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="MS4wL3RydXN0ZWRDZXJ0aWZpY2F0ZXMvJHtOb3cuY3VycmVudH0="/>
+                        <L7p:VariableToSet stringValue="restGatewayMan.uri"/>
+                    </L7p:SetVariable>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="R0VU"/>
+                        <L7p:VariableToSet stringValue="restGatewayMan.action"/>
+                    </L7p:SetVariable>
+                    <L7p:RESTGatewayManagement>
+                        <L7p:OtherTargetMessageVariable stringValue="RESTCALL"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:RESTGatewayManagement>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="Name"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:Item/l7:Name"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="Type"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:Item/l7:Type"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="Anchor"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:Item/l7:Resource/l7:TrustedCertificate/l7:Properties/l7:Property[@key=&quot;trustAnchor&quot;]/l7:BooleanValue"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="verifyHostname"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:Item/l7:Resource/l7:TrustedCertificate/l7:Properties/l7:Property[@key=&quot;verifyHostname&quot;]/l7:BooleanValue"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="trustedForSsl"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:Item/l7:Resource/l7:TrustedCertificate/l7:Properties/l7:Property[@key=&quot;trustedForSsl&quot;]/l7:BooleanValue"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:ResponseXpathAssertion>
+                        <L7p:VariablePrefix stringValue="trustedAsSamlIssuer"/>
+                        <L7p:XpathExpression xpathExpressionValue="included">
+                            <L7p:Expression stringValue="/l7:Item/l7:Resource/l7:TrustedCertificate/l7:Properties/l7:Property[@key=&quot;trustedAsSamlIssuer&quot;]/l7:BooleanValue"/>
+                            <L7p:Namespaces mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="s"/>
+                                    <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                                </L7p:entry>
+                                <L7p:entry>
+                                    <L7p:key stringValue="l7"/>
+                                    <L7p:value stringValue="http://ns.l7tech.com/2010/04/gateway-management"/>
+                                </L7p:entry>
+                            </L7p:Namespaces>
+                            <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                        </L7p:XpathExpression>
+                    </L7p:ResponseXpathAssertion>
+                    <L7p:LookupTrustedCertificate>
+                        <L7p:TrustedCertificateName stringValue="${Name.result}"/>
+                    </L7p:LookupTrustedCertificate>
+                    <L7p:CertificateAttributes>
+                        <L7p:SourceVariable stringValue="certificates"/>
+                        <L7p:SourceVariableEnabled booleanValue="true"/>
+                        <L7p:VariablePrefix stringValue="certificateOUT"/>
+                    </L7p:CertificateAttributes>
+                    <wsp:OneOrMore wsp:Usage="Required">
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:ComparisonAssertion>
+                                <L7p:CaseSensitive booleanValue="false"/>
+                                <L7p:Expression1 stringValue="${certificateOUT.notAfter}"/>
+                                <L7p:Operator operatorNull="null"/>
+                                <L7p:Predicates predicates="included">
+                                    <L7p:item dataType="included">
+                                    <L7p:Type variableDataType="dateTime"/>
+                                    </L7p:item>
+                                    <L7p:item binary="included">
+                                    <L7p:Operator operator="LE"/>
+                                    <L7p:RightValue stringValue="${gateway.time}"/>
+                                    </L7p:item>
+                                </L7p:Predicates>
+                            </L7p:ComparisonAssertion>
+                            <L7p:Email>
+                                <L7p:AuthPassword stringValue="password"/>
+                                <L7p:AuthUsername stringValue="${emailAutheticationUser}"/>
+                                <L7p:Authenticate booleanValue="true"/>
+                                <L7p:Base64message stringValue="VXBkYXRlCgpZb3VyIExheWVyIDcgQVBJIEdhdGV3YXkgJHtnYXRld2F5LmNsdXN0ZXIuaG9zdG5hbWV9IGhhcyBhIGNlcnRpZmljYXRlIHRoYXQgaGFzIGV4cGlyZWQKCiR7TmFtZS5yZXN1bHR9IGV4cGlyZWQgb24gJHtjZXJ0aWZpY2F0ZU9VVC5ub3RBZnRlcn0gCgpVcGRhdGUgb3IgcmV2aWV3IEFTQVAuCgoKCg=="/>
+                                <L7p:Protocol Protocol="SSL"/>
+                                <L7p:SmtpHost stringValue="${emailHost}"/>
+                                <L7p:SmtpPort stringValue="465"/>
+                                <L7p:SourceEmailAddress stringValue="${emailFromAddress}"/>
+                                <L7p:Subject stringValue="[${gateway.cluster.hostname}] Trusted Certificate has expired"/>
+                                <L7p:TargetEmailAddress stringValue="${emailToAddress}"/>
+                            </L7p:Email>
+                        </wsp:All>
+                        <wsp:All wsp:Usage="Required">
+                            <L7p:TrueAssertion/>
+                        </wsp:All>
+                    </wsp:OneOrMore>
+                </L7p:ForEachLoop>
+            </wsp:All>
+        </wsp:All>
+    </wsp:Policy>
+</exp:Export>
