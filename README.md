@@ -14,6 +14,7 @@ This repository is for more general policy examples that are typically self-cont
 |[**Cluster Wide Property Manager**](./Cluster-wide-property-manager)|This uses the REST Manage Gateway assertion to provide a simple web page interface to create, update and delete cluster wide properties|
 |[**Trusted Certificate Viewer**](./trusted-certs-viewer)|This polcy uses the  REST Manage Gateway assertion to provide a simple web page interface to view all the trusted certificates and the expiry date|
 |[**Expired Certificate Notifcation Service (email)**](./expired-cert-email-notifier)|This sample policy uses the REST Manage Gateway assertion to provide a simple notification service for any trusted certificates that are on the gateway. The service sends emails for any certificates it finds to have expired.|
+|[**JWT Parsing Demo**](./JWT-Parsing-Demo)|A simple policy to demonstrate how to parse an unsigned JWT|
 
 
 ## Using the Repository
