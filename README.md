@@ -6,15 +6,16 @@ This repository is for more general policy examples that are typically self-cont
 |Name|Brief Description|
 |-----|-----------------|
 |[**sample**](./policy)|This is a sample policy containing a single comment as used to provide an example of how policies should be described and stored in this repository.|
-|[**Restman Policy**](./Restman-Policy)|A replacement policy for the default Gateway REST Management Service that has better documentation, error handling and inline comments.|
-|[**JWK Grok**](./JWK-Grok)|JWK-Grok is a set of two API Gateway services to help understand how the JOSE features of the API Gateway work.|
-|[**Conditional Auditing**](./Conditional-Auditing)|Enable auditing for specific services via a cluster-wide property|
-|[**Log4Shell**](./log4shell)|Simple filter that looks for a pattern which may be indicative of a log4shell exploit.|
-|[**GraphQL Patterns Today**](./graphqlToday)|Proxying GraphQL API in Layer7 Policy prior to new GraphQL assertions|
 |[**Cluster Wide Property Manager**](./Cluster-wide-property-manager)|This uses the REST Manage Gateway assertion to provide a simple web page interface to create, update and delete cluster wide properties|
-|[**Trusted Certificate Viewer**](./trusted-certs-viewer)|This polcy uses the  REST Manage Gateway assertion to provide a simple web page interface to view all the trusted certificates and the expiry date|
+|[**Conditional Auditing**](./Conditional-Auditing)|Enable auditing for specific services via a cluster-wide property|
 |[**Expired Certificate Notifcation Service (email)**](./expired-cert-email-notifier)|This sample policy uses the REST Manage Gateway assertion to provide a simple notification service for any trusted certificates that are on the gateway. The service sends emails for any certificates it finds to have expired.|
+|[**Gateway As Password Vault**](./Gateway-As-Password-Vault)|Policy to set up a simple password vault on the Gateway that accesses encrypted passwords stored in the Secure Password Store on the Gateway.|
+|[**GraphQL Patterns Today**](./graphqlToday)|Proxying GraphQL API in Layer7 Policy prior to new GraphQL assertions|
+|[**JWK Grok**](./JWK-Grok)|JWK-Grok is a set of two API Gateway services to help understand how the JOSE features of the API Gateway work.|
 |[**JWT Parsing Demo**](./JWT-Parsing-Demo)|A simple policy to demonstrate how to parse an unsigned JWT|
+|[**Log4Shell**](./log4shell)|Simple filter that looks for a pattern which may be indicative of a log4shell exploit.|
+|[**Restman Policy**](./Restman-Policy)|A replacement policy for the default Gateway REST Management Service that has better documentation, error handling and inline comments.|
+|[**Trusted Certificate Viewer**](./trusted-certs-viewer)|This polcy uses the  REST Manage Gateway assertion to provide a simple web page interface to view all the trusted certificates and the expiry date|
 
 
 ## Using the Repository
