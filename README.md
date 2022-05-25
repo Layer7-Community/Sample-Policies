@@ -15,6 +15,7 @@ This repository is for more general policy examples that are typically self-cont
 |[**JWT Parsing Demo**](./JWT-Parsing-Demo)|A simple policy to demonstrate how to parse an unsigned JWT|
 |[**Log4Shell**](./log4shell)|Simple filter that looks for a pattern which may be indicative of a log4shell exploit.|
 |[**Restman Policy**](./Restman-Policy)|A replacement policy for the default Gateway REST Management Service that has better documentation, error handling and inline comments.|
+|[**Timestamp Difference Demo**](./Timestamp-Difference-Demo)|Policy to illustrate how to calculate the difference between two timestamps submitted as query parameters. Covers manipulating time/date variables and using XPath for arithmetic.|
 |[**Trusted Certificate Viewer**](./trusted-certs-viewer)|This polcy uses the  REST Manage Gateway assertion to provide a simple web page interface to view all the trusted certificates and the expiry date|
 
 
