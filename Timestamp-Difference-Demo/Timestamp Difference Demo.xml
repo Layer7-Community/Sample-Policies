@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exp:Export Version="3.0"
+    xmlns:L7p="http://www.layer7tech.com/ws/policy"
+    xmlns:exp="http://www.layer7tech.com/ws/policy/export" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <exp:References/>
+    <wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+        <wsp:All wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="**************************************************************************************************************"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* Policy to illustrate how to calculate the difference between two timestamps submitted as query parameters"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* "/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* Timestamps parameters must comply with the format options of the Set Context Variable assertion"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="*   E.g. ?date1=2022-05-20T10:15:03Z&amp;date2=2022-05-25T05:00:01Z"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* "/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* If using a formula not recognised by the Set Context Variable assertion then modify the Format value in the"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="*   assertion to match the parsing"/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="* "/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="**************************************************************************************************************"/>
+            </L7p:CommentAssertion>
+            <L7p:AuditAssertion/>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Cast ${request.http.parameter.date1} to a date/time variable"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAucGFyYW1ldGVyLmRhdGUxfQ=="/>
+                <L7p:DataType variableDataType="dateTime"/>
+                <L7p:DateOffsetExpression stringValue=""/>
+                <L7p:VariableToSet stringValue="date1"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Cast ${request.http.parameter.date1} to a date/time variable"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtyZXF1ZXN0Lmh0dHAucGFyYW1ldGVyLmRhdGUyfQ=="/>
+                <L7p:DataType variableDataType="dateTime"/>
+                <L7p:DateOffsetExpression stringValue=""/>
+                <L7p:VariableToSet stringValue="date2"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Convert ${date1} to string value of seconds for XPath arithmetic"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtkYXRlMS5zZWNvbmRzfQ=="/>
+                <L7p:VariableToSet stringValue="seconds1"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Convert ${date2} to string value of seconds for XPath arithmetic"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="JHtkYXRlMi5zZWNvbmRzfQ=="/>
+                <L7p:VariableToSet stringValue="seconds2"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Need a dummy text/xml message-type variable for XPath arithmetic"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="PGFyaXRobWV0aWMvPg=="/>
+                <L7p:ContentType stringValue="text/xml; charset=utf-8"/>
+                <L7p:DataType variableDataType="message"/>
+                <L7p:VariableToSet stringValue="arithmetic.xml"/>
+            </L7p:SetVariable>
+            <L7p:ResponseXpathAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Use XPath to calculate the delta in days"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:VariablePrefix stringValue="days.delta"/>
+                <L7p:XmlMsgSrc stringValue="arithmetic.xml"/>
+                <L7p:XpathExpression xpathExpressionValue="included">
+                    <L7p:Expression stringValue="($seconds2 - $seconds1) div 86400"/>
+                    <L7p:Namespaces mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="s"/>
+                            <L7p:value stringValue="http://schemas.xmlsoap.org/soap/envelope/"/>
+                        </L7p:entry>
+                    </L7p:Namespaces>
+                    <L7p:XpathVersion xpathVersion="XPATH_1_0"/>
+                </L7p:XpathExpression>
+            </L7p:ResponseXpathAssertion>
+            <L7p:Regex>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// XPath arithmetic results in a float, so use regex to strip off the excess decimal points to a reasonable value"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:AutoTarget booleanValue="false"/>
+                <L7p:OtherTargetMessageVariable stringValue="days.delta.result"/>
+                <L7p:Regex stringValue="(\....).*$"/>
+                <L7p:Replace booleanValue="true"/>
+                <L7p:Replacement stringValue="$1"/>
+                <L7p:Target target="OTHER"/>
+            </L7p:Regex>
+            <L7p:HardcodedResponse>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// text/plain response with all the values"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64ResponseBody stringValue="UmVzdWx0cyBvZiBkYXRlL3RpbWUgY2FsY3VsYXRpb24gcG9saWN5OgoKcmVxdWVzdC5odHRwLnBhcmFtZXRlci5kYXRlMSA9ICR7cmVxdWVzdC5odHRwLnBhcmFtZXRlci5kYXRlMX0KCnJlcXVlc3QuaHR0cC5wYXJhbWV0ZXIuZGF0ZTIgPSAke3JlcXVlc3QuaHR0cC5wYXJhbWV0ZXIuZGF0ZTJ9CgpkYXRlMT0ke2RhdGUxfQoKZGF0ZTI9JHtkYXRlMn0KCmRhdGUxLnNlY29uZHM9JHtkYXRlMS5zZWNvbmRzfQoKZGF0ZTIuc2Vjb25kcz0ke2RhdGUyLnNlY29uZHN9CgpzZWNvbmRzMT0ke3NlY29uZHMxfQoKc2Vjb25kczI9JHtzZWNvbmRzMn0KCmRheXMuZGVsdGEucmVzdWx0ID0gJHtkYXlzLmRlbHRhLnJlc3VsdH0="/>
+                <L7p:ResponseContentType stringValue="text/plain; charset=UTF-8"/>
+            </L7p:HardcodedResponse>
+        </wsp:All>
+    </wsp:Policy>
+</exp:Export>
