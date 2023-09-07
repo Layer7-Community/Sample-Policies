@@ -17,7 +17,7 @@ This repository is for more general policy examples that are typically self-cont
 |[**Restman Policy**](./Restman-Policy)|A replacement policy for the default Gateway REST Management Service that has better documentation, error handling and inline comments.|
 |[**Timestamp Difference Demo**](./Timestamp-Difference-Demo)|Policy to illustrate how to calculate the difference between two timestamps submitted as query parameters. Covers manipulating time/date variables and using XPath for arithmetic.|
 |[**Trusted Certificate Viewer**](./trusted-certs-viewer)|This polcy uses the  REST Manage Gateway assertion to provide a simple web page interface to view all the trusted certificates and the expiry date|
-
+|[**MAG Push Notificatioin**](./MAG-PushNotification)|This policy demonstrates how to send a message to FCM by generating an oauth token from Firebase Service account|
 
 ## Using the Repository
 
