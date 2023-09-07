@@ -1,0 +1,320 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<exp:Export Version="3.0"
+    xmlns:L7p="http://www.layer7tech.com/ws/policy"
+    xmlns:exp="http://www.layer7tech.com/ws/policy/export" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+    <exp:References/>
+    <wsp:Policy xmlns:L7p="http://www.layer7tech.com/ws/policy" xmlns:wsp="http://schemas.xmlsoap.org/ws/2002/12/policy">
+        <wsp:All wsp:Usage="Required">
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== This is a sample policy to create Oauth token for FCM and send a sample message through FCM ==="/>
+            </L7p:CommentAssertion>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Set custom values for Context Variables below  - Start ==="/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// client_email from service account json file"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="ZmlyZWJhc2UtYWRtaW5zZGstcWpvNDVAZmNtLXB1c2gtbm90aWZpY2F0aW9ucy1iNTc5MS5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbQ=="/>
+                <L7p:VariableToSet stringValue="fcm_client_email"/>
+            </L7p:SetVariable>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// project_id from service account json file"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="ZmNtLXB1c2gtbm90aWZpY2F0aW9ucy1iNTc5MQ=="/>
+                <L7p:VariableToSet stringValue="fcm_project_id"/>
+            </L7p:SetVariable>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Set custom values for Context Variables - End ==="/>
+            </L7p:CommentAssertion>
+            <wsp:OneOrMore wsp:Usage="Required">
+                <wsp:All wsp:Usage="Required">
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue=""/>
+                        <L7p:VariableToSet stringValue="fcm_access_token"/>
+                    </L7p:SetVariable>
+                    <L7p:CacheLookup>
+                        <L7p:AssertionComment assertionComment="included">
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="//Cache age 59 minutes, age can be further reduced if required."/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:AssertionComment>
+                        <L7p:CacheEntryKey stringValue="${fcm_access_token}"/>
+                        <L7p:CacheId stringValue="fcm_token"/>
+                        <L7p:ContentTypeOverride stringValue=""/>
+                        <L7p:MaxEntryAgeSeconds stringValue="3540"/>
+                        <L7p:OtherTargetMessageVariable stringValue="fcm_access_token"/>
+                        <L7p:Target target="OTHER"/>
+                    </L7p:CacheLookup>
+                    <L7p:SetVariable>
+                        <L7p:Base64Expression stringValue="JHtmY21fYWNjZXNzX3Rva2VuLm1haW5wYXJ0fQ=="/>
+                        <L7p:VariableToSet stringValue="fcm_access_token"/>
+                    </L7p:SetVariable>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="// From Cache"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <wsp:All wsp:Usage="Required">
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Expire time - 1 hour"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Base64Expression stringValue=""/>
+                            <L7p:DataType variableDataType="dateTime"/>
+                            <L7p:DateOffsetExpression stringValue="3600"/>
+                            <L7p:VariableToSet stringValue="expiration"/>
+                        </L7p:SetVariable>
+                        <L7p:SetVariable>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Payload for JWT"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Base64Expression stringValue="ew0KCSJhdWQiOiJodHRwczovL29hdXRoMi5nb29nbGVhcGlzLmNvbS90b2tlbiIsDQoJImV4cCI6IiR7ZXhwaXJhdGlvbi5zZWNvbmRzfSIsDQoJImlhdCI6IiR7Z2F0ZXdheS50aW1lLnNlY29uZHN9IiwNCgkiaXNzIjoiJHtmY21fY2xpZW50X2VtYWlsfSIsDQoJInNjb3BlIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9maXJlYmFzZS5tZXNzYWdpbmciDQp9"/>
+                            <L7p:VariableToSet stringValue="jwt_payload"/>
+                        </L7p:SetVariable>
+                        <L7p:JwtEncode>
+                            <L7p:AlgorithmSecretLocation intValue="1"/>
+                            <L7p:AlgorithmSecretValue stringValue="00000000000000000000000000000002.fcm"/>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Use the imported FCM Private key"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:JsonPayload stringValue="${jwt_payload}"/>
+                            <L7p:OutputVariable stringValue="token_jwt"/>
+                            <L7p:SignatureSelected intValue="1"/>
+                            <L7p:SignatureValue stringValue="RS256"/>
+                        </L7p:JwtEncode>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// JWT"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <wsp:All wsp:Usage="Required">
+                        <L7p:SetVariable>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Payload for OAuth"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Base64Expression stringValue="ew0KICAiZ3JhbnRfdHlwZSI6InVybjppZXRmOnBhcmFtczpvYXV0aDpncmFudC10eXBlOmp3dC1iZWFyZXIiLA0KICAiYXNzZXJ0aW9uIjoiJHt0b2tlbl9qd3R9Ig0KfQ=="/>
+                            <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                            <L7p:DataType variableDataType="message"/>
+                            <L7p:VariableToSet stringValue="oAuthPayload"/>
+                        </L7p:SetVariable>
+                        <L7p:HttpRoutingAssertion>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// OAuth Token Request, responds with oAuth token valid for 59 mins 59 secs"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:HttpMethod httpMethod="POST"/>
+                            <L7p:OmitAuthHeaderConnectReuseSystemDefault boxedBooleanValue="true"/>
+                            <L7p:ProtectedServiceUrl stringValue="https://oauth2.googleapis.com/token"/>
+                            <L7p:ProxyPassword stringValueNull="null"/>
+                            <L7p:ProxyUsername stringValueNull="null"/>
+                            <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                                <L7p:ForwardAll booleanValue="true"/>
+                                <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Cookie"/>
+                                    </L7p:item>
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="SOAPAction"/>
+                                    </L7p:item>
+                                </L7p:Rules>
+                            </L7p:RequestHeaderRules>
+                            <L7p:RequestMsgSrc stringValue="oAuthPayload"/>
+                            <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                                <L7p:ForwardAll booleanValue="true"/>
+                                <L7p:Rules httpPassthroughRules="included"/>
+                            </L7p:RequestParamRules>
+                            <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                                <L7p:ForwardAll booleanValue="true"/>
+                                <L7p:Rules httpPassthroughRules="included">
+                                    <L7p:item httpPassthroughRule="included">
+                                    <L7p:Name stringValue="Set-Cookie"/>
+                                    </L7p:item>
+                                </L7p:Rules>
+                            </L7p:ResponseHeaderRules>
+                            <L7p:SamlAssertionVersion intValue="2"/>
+                        </L7p:HttpRoutingAssertion>
+                        <L7p:EvaluateJsonPathExpression>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Parsing the HTTPS JSON Response to get OAuth access token"/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:Expression stringValue="access_token"/>
+                            <L7p:Target target="RESPONSE"/>
+                            <L7p:VariablePrefix stringValue="access_token"/>
+                        </L7p:EvaluateJsonPathExpression>
+                        <L7p:CacheStorage>
+                            <L7p:AssertionComment assertionComment="included">
+                                <L7p:Properties mapValue="included">
+                                    <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// Storing the OAuth access token to cache, cache age 59 minutes, age can be further reduced if required."/>
+                                    </L7p:entry>
+                                </L7p:Properties>
+                            </L7p:AssertionComment>
+                            <L7p:CacheEntryKey stringValue="${fcm_access_token}"/>
+                            <L7p:CacheId stringValue="fcm_token"/>
+                            <L7p:MaxEntryAgeSeconds stringValue="3540"/>
+                            <L7p:OtherTargetMessageVariable stringValue="access_token.result"/>
+                            <L7p:Target target="OTHER"/>
+                        </L7p:CacheStorage>
+                        <L7p:SetVariable>
+                            <L7p:Base64Expression stringValue="JHthY2Nlc3NfdG9rZW4ucmVzdWx0fQ=="/>
+                            <L7p:VariableToSet stringValue="fcm_access_token"/>
+                        </L7p:SetVariable>
+                        <L7p:assertionComment>
+                            <L7p:Properties mapValue="included">
+                                <L7p:entry>
+                                    <L7p:key stringValue="RIGHT.COMMENT"/>
+                                    <L7p:value stringValue="// OAuth"/>
+                                </L7p:entry>
+                            </L7p:Properties>
+                        </L7p:assertionComment>
+                    </wsp:All>
+                    <L7p:assertionComment>
+                        <L7p:Properties mapValue="included">
+                            <L7p:entry>
+                                <L7p:key stringValue="RIGHT.COMMENT"/>
+                                <L7p:value stringValue="// From Remote"/>
+                            </L7p:entry>
+                        </L7p:Properties>
+                    </L7p:assertionComment>
+                </wsp:All>
+                <L7p:assertionComment>
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Gets OAuth Token: fcm_access_token"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:assertionComment>
+            </wsp:OneOrMore>
+            <L7p:CommentAssertion>
+                <L7p:Comment stringValue="=== Add any new Context Variables or extensions below ==="/>
+            </L7p:CommentAssertion>
+            <L7p:SetVariable>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Payload should be customized as per requirement"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64Expression stringValue="ew0KICAgIm1lc3NhZ2UiOnsNCiAgICAgICJ0b2tlbiI6ImV2OU5WLVhVVDNLRDVJNXNmdmFhNmw6QVBBOTFiR0VMUTctdWxWN2Q3ZHlUazg0dE5wa1FXVHFNLTc1NE5qY1RjblZjNmVwZEVyMEVUNkIzZFZDTTFXckhaY3NDMGtHUkQzVmZaWFVOMlZ4Ymp3bDRhUU9GZE1lSUtfcF9CQ1ptN3poQmFwZEhma0Y1NWRmQ01XTHZTZGp5NXFBY0hxNkxxUE0iLA0KICAgICJkYXRhIjogew0KICAgICAgInN0b3J5X2lkIjogInN0b3J5X2d3SlNPTiINCiAgICB9DQogICB9DQp9"/>
+                <L7p:ContentType stringValue="application/json; charset=utf-8"/>
+                <L7p:DataType variableDataType="message"/>
+                <L7p:VariableToSet stringValue="payload"/>
+            </L7p:SetVariable>
+            <L7p:HttpRoutingAssertion>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Sends Notification Message"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:HttpMethod httpMethod="POST"/>
+                <L7p:OmitAuthHeaderConnectReuseSystemDefault boxedBooleanValue="true"/>
+                <L7p:ProtectedServiceUrl stringValue="https://fcm.googleapis.com/v1/projects/${fcm_project_id}/messages:send"/>
+                <L7p:ProxyPassword stringValueNull="null"/>
+                <L7p:ProxyUsername stringValueNull="null"/>
+                <L7p:RequestHeaderRules httpPassthroughRuleSet="included">
+                    <L7p:Rules httpPassthroughRules="included">
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="Cookie"/>
+                        </L7p:item>
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="SOAPAction"/>
+                        </L7p:item>
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:CustomizeValue stringValue="Bearer ${fcm_access_token}"/>
+                            <L7p:Name stringValue="Authorization"/>
+                            <L7p:UsesCustomizedValue booleanValue="true"/>
+                        </L7p:item>
+                    </L7p:Rules>
+                </L7p:RequestHeaderRules>
+                <L7p:RequestMsgSrc stringValue="payload"/>
+                <L7p:RequestParamRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included"/>
+                </L7p:RequestParamRules>
+                <L7p:ResponseHeaderRules httpPassthroughRuleSet="included">
+                    <L7p:ForwardAll booleanValue="true"/>
+                    <L7p:Rules httpPassthroughRules="included">
+                        <L7p:item httpPassthroughRule="included">
+                            <L7p:Name stringValue="Set-Cookie"/>
+                        </L7p:item>
+                    </L7p:Rules>
+                </L7p:ResponseHeaderRules>
+                <L7p:ResponseMsgDest stringValue="resp"/>
+                <L7p:SamlAssertionVersion intValue="2"/>
+            </L7p:HttpRoutingAssertion>
+            <L7p:HardcodedResponse>
+                <L7p:AssertionComment assertionComment="included">
+                    <L7p:Properties mapValue="included">
+                        <L7p:entry>
+                            <L7p:key stringValue="RIGHT.COMMENT"/>
+                            <L7p:value stringValue="// Optional - FCM Response"/>
+                        </L7p:entry>
+                    </L7p:Properties>
+                </L7p:AssertionComment>
+                <L7p:Base64ResponseBody stringValue="JHtyZXNwfQ=="/>
+                <L7p:EarlyResponse booleanValue="true"/>
+                <L7p:ResponseContentType stringValue="application/json; charset=UTF-8"/>
+            </L7p:HardcodedResponse>
+        </wsp:All>
+    </wsp:Policy>
+</exp:Export>
