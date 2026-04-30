@@ -74,14 +74,11 @@ After creating the encapsulated assertion in the Policy Manager (Step 1), you  c
 
 The bundle name must be formatted as `[BundleName]-[x.y.z]` (e.g., `MyTemplate-1.0.0`) and must not include spaces. Once you export the bundle, you may rename the file as necessary to match the correct naming convention and version number.
 
-To export your template as a bundle, you may use one of the following approaches:
+To create your bundle and manage it in the Portal:
 
 1. **Export** an existing encapsulated assertion to a JSON bundle.  
    1. Using the Graphman CLI
-
-```shell
- ./graphman.sh export --gateway <gateway> --using encass --variables.name <encass name> --output <template_name>-<x>.<y>.<z>.json
-```
+      1. Example Command: ```./graphman.sh export --gateway <gateway> --using encass --variables.name <encass name> --output <template_name>-<x>.<y>.<z>.json```
 
    2. Using the web-based Policy Manager  
       1. Select “Export”  
@@ -92,7 +89,7 @@ To export your template as a bundle, you may use one of the following approaches
       6. Select “XML” in the “Export Format” drop-down.  
       7. Click “Export”  
       8. You will now have a file “bundle.json”   
-      9. Rename the file to match the template naming convention \<bundle-name\>.x.y.z  
+      9. Rename the file to match the template naming convention \<bundle-name\>-x.y.z  
 2. **Upload**: Portal Admins may now upload this JSON bundle to the Portal UI (`Manage` \> `Gateway Bundles`).  
 3. **Deploy**: In the Portal UI, deploy the uploaded bundle to the desired enrolled proxies. Deployment is done by clicking on the template within the (`Manage` \> `Gateway Bundles`) page, and then navigating to the **Gateway Bundle Deployments** tab. From this tab you may deploy, redeploy, and undeploy bundles to/from specific API Gateways.
 
