@@ -77,7 +77,7 @@ The bundle name must be formatted as `[BundleName]-[x.y.z]` (e.g., `MyTemplate-1
 To create your bundle and manage it in the Portal:
 
 1. **Export** an existing encapsulated assertion to a JSON bundle.  
-   1. Using the Graphman CLI
+   1. Using the [Graphman CLI](https://github.com/Layer7-Community/graphman-client)
       1. Example Command: ```./graphman.sh export --gateway <gateway> --using encass --variables.name <encass name> --output <template_name>-<x>.<y>.<z>.json```
 
    2. Using the web-based Policy Manager  
