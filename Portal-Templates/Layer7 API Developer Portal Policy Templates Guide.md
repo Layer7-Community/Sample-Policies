@@ -74,7 +74,7 @@ After creating the encapsulated assertion in the Policy Manager (Step 1), you  c
 
 The bundle name must be formatted as `[BundleName]-[x.y.z]` (e.g., `MyTemplate-1.0.0`) and must not include spaces. Once you export the bundle, you may rename the file as necessary to match the correct naming convention and version number.
 
-To export your template as a bundle:
+To export your template as a bundle, you may use one of the following approaches:
 
 1. **Export** an existing encapsulated assertion to a JSON bundle.  
    1. Using the Graphman CLI
