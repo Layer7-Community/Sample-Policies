@@ -176,7 +176,7 @@ These variables are used by a global policy applied at the end of message proces
 
 The application UUID is found in the Custom MetaData field populated by the “**Portal API Key Look Up (Generic)**” assertion. To extract this value, some additional policy logic is required. The below is an example of this logic:
 
-![][image1]
+![image1](images/policyexample-appuuid.png)
 
 ## 
 
