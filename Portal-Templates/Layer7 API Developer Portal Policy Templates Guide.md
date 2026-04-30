@@ -158,7 +158,7 @@ You can safely pass sensitive information (like backend API keys or passwords) t
 * **Storage**: The value is securely encrypted and stored as a stored password in the Gateway database.  
 * **Usage**: The secret can be referenced securely in the policy using context variables e.g., `${l7.secure.username}`, preventing exposure in logs or exported bundles.
 
-**Analytics \- IN PROGRESS \-** 
+**Analytics** 
 
 When creating the policy templates, there are a number of context variables that must be set in order to gather the proper analytics data for reporting purposes. The following table provides a list of these variables along with information about how they are used and how to set their values. All of these variables must be exported using the “**Export Variables from Fragment** assertion.
 
