@@ -1,0 +1,84 @@
+{
+  "encassConfigs": [
+    {
+      "goid": "1b0856ed46c14522b6a3ab83b1afd79c",
+      "guid": "d2bbbaab-0f14-45ef-a766-6e549fbfc0ae",
+      "name": "APIKeyValidation1.0",
+      "description": "Validates that an incoming API key, supplied in the 'apikey' HTTP header or 'apikey' query parameter, is valid and authorized for the managed API.",
+      "policyName": "APIKeyValidation1.0",
+      "encassArgs": [
+        {
+          "name": "portal.managed.service.apiId",
+          "type": "STRING",
+          "ordinal": 1,
+          "guiPrompt": false
+        }
+      ],
+      "encassResults": [
+        {
+          "name": "apiKeyRecord.accountPlanMappingId",
+          "type": "STRING"
+        },
+        {
+          "name": "apiKeyRecord.accountPlanMappingName",
+          "type": "STRING"
+        },
+        {
+          "name": "apiKeyRecord.id",
+          "type": "STRING"
+        },
+        {
+          "name": "apiKeyRecord.key",
+          "type": "STRING"
+        },
+        {
+          "name": "apiKeyRecord.plan",
+          "type": "STRING"
+        },
+        {
+          "name": "apiKeyRecord.status",
+          "type": "STRING"
+        },
+        {
+          "name": "errorMsg",
+          "type": "STRING"
+        }
+      ],
+      "properties": [
+        {
+          "name": "paletteFolder",
+          "value": "internalAssertions"
+        },
+        {
+          "name": "passMetricsToParent",
+          "value": "false"
+        },
+        {
+          "name": "allowTracing",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "goid": "fa3ec26ec4ec4d9c9b7665ca47457a20",
+      "guid": "6c7281a3-e9ec-4df8-a1b7-eb01579a62e4",
+      "name": "APIKeyValidation1.0",
+      "policyType": "FRAGMENT",
+      "enabled": true,
+      "folderPath": "/Portal Templates",
+      "soap": false,
+      "policy": {
+        "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<wsp:Policy xmlns:L7p=\"http://www.layer7tech.com/ws/policy\" xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2002/12/policy\">\n    <wsp:All wsp:Usage=\"Required\">\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"QVBJX0tFWQ==\"/>\n            <L7p:VariableToSet stringValue=\"portal.analytics.authType\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHtwb3J0YWwubWFuYWdlZC5zZXJ2aWNlLmFwaUlkfQ==\"/>\n            <L7p:VariableToSet stringValue=\"portal.analytics.api.uuid\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"\"/>\n            <L7p:VariableToSet stringValue=\"errorMsg\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"\"/>\n            <L7p:VariableToSet stringValue=\"lookupApiKey\"/>\n        </L7p:SetVariable>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <wsp:All wsp:Usage=\"Required\">\n        <L7p:ComparisonAssertion>\n            <L7p:CaseSensitive booleanValue=\"false\"/>\n            <L7p:Expression1 stringValue=\"${request.http.header.apikey}\"/>\n            <L7p:Operator operatorNull=\"null\"/>\n            <L7p:Predicates predicates=\"included\">\n                <L7p:item dataType=\"included\">\n                    <L7p:Type variableDataType=\"string\"/>\n                </L7p:item>\n                <L7p:item binary=\"included\">\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Negated booleanValue=\"true\"/>\n                    <L7p:Operator operator=\"EMPTY\"/>\n                    <L7p:RightValue stringValue=\"\"/>\n                </L7p:item>\n            </L7p:Predicates>\n        </L7p:ComparisonAssertion>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHtyZXF1ZXN0Lmh0dHAuaGVhZGVyLmFwaWtleX0=\"/>\n            <L7p:VariableToSet stringValue=\"lookupApiKey\"/>\n        </L7p:SetVariable>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n        <L7p:ComparisonAssertion>\n            <L7p:CaseSensitive booleanValue=\"false\"/>\n            <L7p:Expression1 stringValue=\"${request.http.parameter.apikey}\"/>\n            <L7p:Operator operatorNull=\"null\"/>\n            <L7p:Predicates predicates=\"included\">\n                <L7p:item dataType=\"included\">\n                    <L7p:Type variableDataType=\"string\"/>\n                </L7p:item>\n                <L7p:item binary=\"included\">\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Negated booleanValue=\"true\"/>\n                    <L7p:Operator operator=\"EMPTY\"/>\n                    <L7p:RightValue stringValue=\"\"/>\n                </L7p:item>\n            </L7p:Predicates>\n        </L7p:ComparisonAssertion>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHtyZXF1ZXN0Lmh0dHAucGFyYW1ldGVyLmFwaWtleX0=\"/>\n            <L7p:VariableToSet stringValue=\"lookupApiKey\"/>\n        </L7p:SetVariable>\n            </wsp:All>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"QVBJIGtleSBpcyBtaXNzaW5nIGZyb20gcmVxdWVzdA==\"/>\n            <L7p:VariableToSet stringValue=\"errorMsg\"/>\n        </L7p:SetVariable>\n        </wsp:OneOrMore>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <wsp:All wsp:Usage=\"Required\">\n        <L7p:ComparisonAssertion>\n            <L7p:CaseSensitive booleanValue=\"false\"/>\n            <L7p:Expression1 stringValue=\"${errorMsg}\"/>\n            <L7p:Operator operatorNull=\"null\"/>\n            <L7p:Predicates predicates=\"included\">\n                <L7p:item dataType=\"included\">\n                    <L7p:Type variableDataType=\"string\"/>\n                </L7p:item>\n                <L7p:item binary=\"included\">\n                    <L7p:Operator operator=\"EMPTY\"/>\n                    <L7p:RightValue stringValue=\"\"/>\n                </L7p:item>\n            </L7p:Predicates>\n        </L7p:ComparisonAssertion>\n        <L7p:Encapsulated>\n            <L7p:EncapsulatedAssertionConfigGuid stringValue=\"b74008fa-97b2-4556-9b5b-30e057641570\"/>\n            <L7p:EncapsulatedAssertionConfigName stringValue=\"Portal Look Up API Key (Generic)\"/>\n            <L7p:Parameters mapValue=\"included\">\n                <L7p:entry>\n                    <L7p:key stringValue=\"apikey\"/>\n                    <L7p:value stringValue=\"${lookupApiKey}\"/>\n                </L7p:entry>\n                <L7p:entry>\n                    <L7p:key stringValue=\"serviceid\"/>\n                    <L7p:value stringValue=\"${portal.managed.service.apiId}\"/>\n                </L7p:entry>\n            </L7p:Parameters>\n        </L7p:Encapsulated>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <wsp:All wsp:Usage=\"Required\">\n        <L7p:ComparisonAssertion>\n            <L7p:CaseSensitive booleanValue=\"false\"/>\n            <L7p:Expression1 stringValue=\"${apiKeyRecord.found}\"/>\n            <L7p:Operator operatorNull=\"null\"/>\n            <L7p:Predicates predicates=\"included\">\n                <L7p:item dataType=\"included\">\n                    <L7p:Type variableDataType=\"string\"/>\n                </L7p:item>\n                <L7p:item binary=\"included\">\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    \n                    <L7p:RightValue stringValue=\"true\"/>\n                </L7p:item>\n            </L7p:Predicates>\n        </L7p:ComparisonAssertion>\n        <L7p:ComparisonAssertion>\n            <L7p:CaseSensitive booleanValue=\"false\"/>\n            <L7p:Expression1 stringValue=\"${apiKeyRecord.service}\"/>\n            <L7p:Operator operatorNull=\"null\"/>\n            <L7p:Predicates predicates=\"included\">\n                <L7p:item dataType=\"included\">\n                    <L7p:Type variableDataType=\"string\"/>\n                </L7p:item>\n                <L7p:item binary=\"included\">\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    \n                    <L7p:RightValue stringValue=\"${portal.managed.service.apiId}\"/>\n                </L7p:item>\n            </L7p:Predicates>\n        </L7p:ComparisonAssertion>\n        <L7p:ComparisonAssertion>\n            <L7p:CaseSensitive booleanValue=\"false\"/>\n            <L7p:Expression1 stringValue=\"${apiKeyRecord.status}\"/>\n            <L7p:Operator operatorNull=\"null\"/>\n            <L7p:Predicates predicates=\"included\">\n                <L7p:item dataType=\"included\">\n                    <L7p:Type variableDataType=\"string\"/>\n                </L7p:item>\n                <L7p:item binary=\"included\">\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    \n                    <L7p:RightValue stringValue=\"active\"/>\n                </L7p:item>\n            </L7p:Predicates>\n        </L7p:ComparisonAssertion>\n            </wsp:All>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"QVBJIGtleSBub3QgZm91bmQgb3IgaW52YWxpZA==\"/>\n            <L7p:VariableToSet stringValue=\"errorMsg\"/>\n        </L7p:SetVariable>\n        </wsp:OneOrMore>\n            </wsp:All>\n            <L7p:TrueAssertion/>\n        </wsp:OneOrMore>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:ComparisonAssertion>\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Expression1 stringValue=\"${errorMsg}\"/>\n                    <L7p:Operator operatorNull=\"null\"/>\n                    <L7p:Predicates predicates=\"included\">\n                        <L7p:item dataType=\"included\">\n                            <L7p:Type variableDataType=\"string\"/>\n                        </L7p:item>\n                        <L7p:item binary=\"included\">\n                            <L7p:Operator operator=\"EMPTY\"/>\n                            <L7p:RightValue stringValue=\"\"/>\n                        </L7p:item>\n                    </L7p:Predicates>\n                </L7p:ComparisonAssertion>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuaWR9\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.apikey\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuaWR9\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.application.uuid\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQubGFiZWx9\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.application.name\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuYWNjb3VudFBsYW5NYXBwaW5nSWR9\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.organization.uuid\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuYWNjb3VudFBsYW5NYXBwaW5nTmFtZX0=\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.organization.name\"/>\n                </L7p:SetVariable>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"NDAx\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.response.code\"/>\n                </L7p:SetVariable>\n            </wsp:All>\n        </wsp:OneOrMore>\n        <L7p:ExportVariables>\n            <L7p:ExportedVars stringArrayValue=\"included\">\n                <L7p:item stringValue=\"apiKeyRecord.accountPlanMappingId\"/>\n                <L7p:item stringValue=\"apiKeyRecord.accountPlanMappingName\"/>\n                <L7p:item stringValue=\"apiKeyRecord.id\"/>\n                <L7p:item stringValue=\"apiKeyRecord.key\"/>\n                <L7p:item stringValue=\"apiKeyRecord.plan\"/>\n                <L7p:item stringValue=\"apiKeyRecord.status\"/>\n                <L7p:item stringValue=\"errorMsg\"/>\n                <L7p:item stringValue=\"portal.analytics.authType\"/>\n                <L7p:item stringValue=\"portal.analytics.api.uuid\"/>\n                <L7p:item stringValue=\"portal.analytics.apikey\"/>\n                <L7p:item stringValue=\"portal.analytics.application.uuid\"/>\n                <L7p:item stringValue=\"portal.analytics.application.name\"/>\n                <L7p:item stringValue=\"portal.analytics.organization.uuid\"/>\n                <L7p:item stringValue=\"portal.analytics.organization.name\"/>\n                <L7p:item stringValue=\"portal.analytics.response.code\"/>\n            </L7p:ExportedVars>\n        </L7p:ExportVariables>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n        <L7p:ComparisonAssertion>\n            <L7p:CaseSensitive booleanValue=\"false\"/>\n            <L7p:Expression1 stringValue=\"${errorMsg}\"/>\n            <L7p:Operator operatorNull=\"null\"/>\n            <L7p:Predicates predicates=\"included\">\n                <L7p:item dataType=\"included\">\n                    <L7p:Type variableDataType=\"string\"/>\n                </L7p:item>\n                <L7p:item binary=\"included\">\n                    <L7p:Operator operator=\"EMPTY\"/>\n                    <L7p:RightValue stringValue=\"\"/>\n                </L7p:item>\n            </L7p:Predicates>\n        </L7p:ComparisonAssertion>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:CustomizeErrorResponse>\n                    <L7p:Content stringValue=\"${errorMsg}\"/>\n                    <L7p:ExtraHeaders nameValuePairArray=\"included\"/>\n                    <L7p:HttpStatus stringValue=\"401\"/>\n                </L7p:CustomizeErrorResponse>\n                <L7p:FalseAssertion/>\n            </wsp:All>\n        </wsp:OneOrMore>\n    </wsp:All>\n</wsp:Policy>\n"
+      }
+    }
+  ],
+  "properties": {
+    "meta": {
+      "name": "APIKeyValidation1.0 Bundle",
+      "schema": "11.2.1"
+    },
+    "defaultAction": "NEW_OR_UPDATE"
+  }
+}
