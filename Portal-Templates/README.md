@@ -6,7 +6,7 @@ This folder contains a collection of example **policy template bundles** that ca
 
 ## How to use these bundles
 
-1. Import the desired `*.json` bundle into your Layer7 API Gateway (Web Based Policy Manager → *Import Graphman Bundles*, or via the Graphman Client).
+1. Import the desired `*.json` bundle into your Layer7 API Gateway (Web Based Policy Manager → *Import Graphman Bundle*, or via the [Graphman Client](https://github.com/Layer7-Community/graphman-client)).
 2. Each bundle installs:
    - A **policy fragment** under `/Portal Templates/`.
    - An **encapsulated assertion** that wraps the fragment and exposes it to Portal-managed services.
