@@ -30,7 +30,7 @@ When you integrate or enroll an API Gateway with the API Developer Portal, syste
 * **Examples**: Standard authentication, quota, and rate limit policy templates (e.g., `l7.apim.system - Rate & Quota Policy Template`).  
 * **Usage**: Deployed automatically or by Portal Admins to enable built-in Portal features. They cannot be deleted but they may be hidden if desired by ensuring they are not assigned to any Policy Template Category.
 
-## **Standard Templates**
+**Standard Templates**
 
 The Portal provides a set of "standard" policy templates out of the box. These include:
 
@@ -124,20 +124,17 @@ If you are building a template to perform routing, you must ensure that you are 
 
 **Steps to Enable Custom Routing:**
 
-1. Add the following assertion to your template. This variable informs the default Portal policy to bypass any default routing and use this template’s routing instead.  
-   `Set Context Variable override_template_routing as String to: true`  
-2. Include the “`Route via HTTP`” assertion and ensure the properties of the assertion are set to meet your needs for header processing, TLS, and any other settings desired. The URL may be set to the following, assuming you wish to pass through any incoming query parameters (note however that best security practice would be to validate and restrict query parameters before passing them to the backend service).  
+1. Include the “`Route via HTTP`” assertion and ensure the properties of the assertion are set to meet your needs for header processing, TLS, and any other settings desired. The URL may be set to the following, assuming you wish to pass through any incoming query parameters (note however that best security practice would be to validate and restrict query parameters before passing them to the backend service).  
    `${apiLocation}${request.url.query}`  
-3. Configure the template to avoid CORS issues. With custom route policies, it is possible that the `Access-Control-Allow-Origin` header may be set to a value that prevents the API from being called from the API Portal’s “Spec” page where users can interact directly with the API. To prevent this, the template must be configured to remove the CORS header.   
+2. Configure the template to avoid CORS issues. With custom route policies, it is possible that the `Access-Control-Allow-Origin` header may be set to a value that prevents the API from being called from the API Portal’s “Spec” page where users can interact directly with the API. To prevent this, the template must be configured to remove the CORS header.   
    **Steps to Filter Headers:**  
-   1. Add the “**Message Transport Headers/Properties**” assertion to your template after the Route Via HTTP(S) assertion  
+   1. Add the “**Manage Transport Headers/Properties**” assertion to your template after the Route Via HTTP(S) assertion  
    2. Set **Type** to “**HTTP Header**”  
    3. Set **Operation** to “**Remove**”  
    4. Set **Property/Header Name** to “**Access-Control-Allow-Origin**”  
    5. Press “**OK**”  
    6. Ensure the assertion appears as “Response: Remove HTTP Header(s) Access-Control-Allow-Origin. In this case “Response” is the target message which is automatically set when the assertion is placed after the route assertion. If this is set to another value, right click on the assertion, choose “Select Target Message" and then select “Response” and press “OK”. Also ensure the assertion is placed after the route assertion.  
    7. Save and activate the policy.  
-4. Ensure the variable `override_template_routing` defined as an exported variable using the “**Export Variables from Fragment**” assertion at the end of your policy.
 
 ### **Drop-Down Selection Fields**
 
