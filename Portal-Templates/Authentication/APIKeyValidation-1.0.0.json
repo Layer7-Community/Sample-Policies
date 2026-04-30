@@ -3,9 +3,9 @@
     {
       "goid": "1b0856ed46c14522b6a3ab83b1afd79c",
       "guid": "d2bbbaab-0f14-45ef-a766-6e549fbfc0ae",
-      "name": "APIKeyValidation1.0",
+      "name": "APIKeyValidation-1.0",
       "description": "Validates that an incoming API key, supplied in the 'apikey' HTTP header or 'apikey' query parameter, is valid and authorized for the managed API.",
-      "policyName": "APIKeyValidation1.0",
+      "policyName": "APIKeyValidation-1.0",
       "encassArgs": [
         {
           "name": "portal.managed.service.apiId",
@@ -64,7 +64,7 @@
     {
       "goid": "fa3ec26ec4ec4d9c9b7665ca47457a20",
       "guid": "6c7281a3-e9ec-4df8-a1b7-eb01579a62e4",
-      "name": "APIKeyValidation1.0",
+      "name": "APIKeyValidation-1.0",
       "policyType": "FRAGMENT",
       "enabled": true,
       "folderPath": "/Portal Templates",
@@ -76,7 +76,7 @@
   ],
   "properties": {
     "meta": {
-      "name": "APIKeyValidation1.0 Bundle",
+      "name": "APIKeyValidation-1.0 Bundle",
       "schema": "11.2.1"
     },
     "defaultAction": "NEW_OR_UPDATE"
