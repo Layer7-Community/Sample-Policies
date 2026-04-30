@@ -6,10 +6,10 @@ This folder contains a collection of example **policy template bundles** that ca
 
 ## How to use these bundles
 
-1. Import the desired `*.json` bundle into your Layer7 API Gateway (Policy Manager → *Manage Policy Bundles*, or via the Restman/GMU bundle import tooling). All bundles target schema `11.2.1` and use a `defaultAction` of `NEW_OR_UPDATE`.
+1. Import the desired `*.json` bundle into your Layer7 API Gateway (Web Based Policy Manager → *Import Graphman Bundles*, or via the Graphman Client).
 2. Each bundle installs:
    - A **policy fragment** under `/Portal Templates/`.
-   - An **encapsulated assertion** (palette folder: *internalAssertions*) that wraps the fragment and exposes it to Portal-managed services.
+   - An **encapsulated assertion** that wraps the fragment and exposes it to Portal-managed services.
 3. View and modify the policy as needed to meet your needs.
 4. Export the final bundle that you wish to use so that it may be imported into the API Portal.
 
