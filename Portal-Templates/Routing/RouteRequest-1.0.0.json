@@ -1,0 +1,79 @@
+{
+  "encassConfigs": [
+    {
+      "goid": "a1b2c3d4e5f60718293a4b5c6d7e8f90",
+      "guid": "a1b2c3d4-e5f6-4071-8293-a4b5c6d7e8f9",
+      "name": "RouteRequest-1.0",
+      "checksum": "119e2c29a48397970e3fb9ef3123cb4741c5380a",
+      "description": "Backend routing fragment. Performs the Route via HTTP assertion to forward the incoming request to the backend API location, sets override_template_routing=true so a parent template skips its own routing, and captures the backend response code in portal.analytics.responseCode. Both variables are exported via the Export Variables from Fragment assertion.",
+      "policyName": "RouteRequest-1.0",
+      "encassArgs": [
+        {
+          "name": "apiLocation",
+          "type": "STRING",
+          "ordinal": 1,
+          "guiPrompt": false
+        },
+        {
+          "name": "serviceUrl",
+          "type": "STRING",
+          "ordinal": 2,
+          "guiPrompt": false
+        }
+      ],
+      "encassResults": [
+        {
+          "name": "override_template_routing",
+          "type": "STRING"
+        },
+        {
+          "name": "portal.analytics.response.code",
+          "type": "STRING"
+        }
+      ],
+      "properties": [
+        {
+          "name": "allowTracing",
+          "value": "false"
+        },
+        {
+          "name": "paletteFolder",
+          "value": "customAssertions"
+        },
+        {
+          "name": "paletteIconResourceName",
+          "value": "polback16.gif"
+        },
+        {
+          "name": "passMetricsToParent",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "goid": "f1e2d3c4b5a649788baf1c2d3e4f5061",
+      "guid": "f1e2d3c4-b5a6-4978-8baf-1c2d3e4f5061",
+      "name": "RouteRequest-1.0",
+      "policyType": "FRAGMENT",
+      "checksum": "a6d35ac1e6dcf671752ac89f80d3016b277585c5",
+      "version": 9,
+      "enabled": true,
+      "folderPath": "/Portal Templates",
+      "soap": false,
+      "policy": {
+        "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<wsp:Policy xmlns:L7p=\"http://www.layer7tech.com/ws/policy\" xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2002/12/policy\">\n    <wsp:All wsp:Usage=\"Required\">\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Policy Fragment: RouteRequest-1.0\"/>\n        </L7p:CommentAssertion>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"ZmFsc2U=\"/>\n            <L7p:VariableToSet stringValue=\"override_template_routing\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHtyZXF1ZXN0Lmh0dHAudXJpfQ==\"/>\n            <L7p:VariableToSet stringValue=\"param.uri\"/>\n        </L7p:SetVariable>\n        <L7p:Regex>\n            <L7p:AutoTarget booleanValue=\"false\"/>\n            <L7p:OtherTargetMessageVariable stringValue=\"param.uri\"/>\n            <L7p:PatternContainsVariables booleanValue=\"true\"/>\n            <L7p:Regex stringValue=\"/${serviceUrl}\"/>\n            <L7p:RegexName stringValue=\"process uri\"/>\n            <L7p:Replace booleanValue=\"true\"/>\n            <L7p:Replacement stringValue=\"\"/>\n            <L7p:Target target=\"OTHER\"/>\n        </L7p:Regex>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:HttpRoutingAssertion>\n                    <L7p:FailOnErrorStatus booleanValue=\"false\"/>\n                    <L7p:OmitAuthHeaderConnectReuseSystemDefault boxedBooleanValue=\"true\"/>\n                    <L7p:ProtectedServiceUrl stringValue=\"${apiLocation}${param.uri}${request.url.query}\"/>\n                    <L7p:ProxyPassword stringValueNull=\"null\"/>\n                    <L7p:ProxyUsername stringValueNull=\"null\"/>\n                    <L7p:RequestHeaderRules httpPassthroughRuleSet=\"included\">\n                        <L7p:ForwardAll booleanValue=\"true\"/>\n                        <L7p:Rules httpPassthroughRules=\"included\">\n                            <L7p:item httpPassthroughRule=\"included\">\n                                <L7p:Name stringValue=\"Cookie\"/>\n                            </L7p:item>\n                            <L7p:item httpPassthroughRule=\"included\">\n                                <L7p:Name stringValue=\"SOAPAction\"/>\n                            </L7p:item>\n                        </L7p:Rules>\n                    </L7p:RequestHeaderRules>\n                    <L7p:RequestParamRules httpPassthroughRuleSet=\"included\">\n                        <L7p:ForwardAll booleanValue=\"true\"/>\n                        <L7p:Rules httpPassthroughRules=\"included\"/>\n                    </L7p:RequestParamRules>\n                    <L7p:ResponseHeaderRules httpPassthroughRuleSet=\"included\">\n                        <L7p:ForwardAll booleanValue=\"true\"/>\n                        <L7p:Rules httpPassthroughRules=\"included\">\n                            <L7p:item httpPassthroughRule=\"included\">\n                                <L7p:Name stringValue=\"Set-Cookie\"/>\n                            </L7p:item>\n                        </L7p:Rules>\n                    </L7p:ResponseHeaderRules>\n                    <L7p:SamlAssertionVersion intValue=\"2\"/>\n                </L7p:HttpRoutingAssertion>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHtyZXNwb25zZS5odHRwLnN0YXR1c30=\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.response.code\"/>\n                </L7p:SetVariable>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHtyZXNwb25zZS5odHRwLnN0YXR1c30=\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.response.code\"/>\n                </L7p:SetVariable>\n                <L7p:CustomizeErrorResponse>\n                    <L7p:Content stringValue=\"Unable to route to API.\"/>\n                    <L7p:ExtraHeaders nameValuePairArray=\"included\"/>\n                    <L7p:HttpStatus stringValue=\"502\"/>\n                </L7p:CustomizeErrorResponse>\n                <L7p:FalseAssertion/>\n            </wsp:All>\n        </wsp:OneOrMore>\n        <L7p:ExportVariables>\n            <L7p:ExportedVars stringArrayValue=\"included\">\n                <L7p:item stringValue=\"override_template_routing\"/>\n                <L7p:item stringValue=\"portal.analytics.response.code\"/>\n            </L7p:ExportedVars>\n        </L7p:ExportVariables>\n    </wsp:All>\n</wsp:Policy>\n"
+      }
+    }
+  ],
+  "properties": {
+    "defaultAction": "NEW_OR_UPDATE",
+    "meta": {
+      "id": "31418c15-6d10-4016-8b91-2967cfb0661b",
+      "name": "Gateway Graphman Bundle - 2026-05-02T01:09:41.853Z",
+      "schema": "11.2.1"
+    },
+    "mappings": {}
+  }
+}
