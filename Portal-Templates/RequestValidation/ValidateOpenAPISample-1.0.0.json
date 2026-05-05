@@ -1,0 +1,101 @@
+{
+  "encassConfigs": [
+    {
+      "goid": "e1f2a3b4c5d60718293a4b5c6d7e8f01",
+      "guid": "e1f2a3b4-c5d6-4071-8293-a4b5c6d7e8f1",
+      "name": "ValidateOpenAPISample-1.0",
+      "description": "Demonstrates how to validate an incoming request against an OpenAPI 3.x specification published by the Layer7 API Developer Portal. The OpenAPI document is read from the Portal-managed service property service.property.internal.apiSpec; validation is performed by the Layer7 'Validate Against OpenAPI Document' assertion. A drop-down argument (l7.enum.option) lets the publisher choose a Validation Profile (path, path_and_method, request, or request_strict); each profile sets every option on the assertion explicitly (ValidatePath, ValidateMethod, ValidateHeaders, ValidateQueryParameters, ValidateBody, RequireSecurityCredentials, StrictValidation, plus UseOpenApiDocAsUrl and the result-variable Prefix), so the bundle exercises the assertion's full option surface and serves as a starting point for any validation policy. Validation results are exposed via openapi.path, openapi.expandedPath, openapi.servers and openapi.errors.",
+      "policyName": "ValidateOpenAPISample-1.0",
+      "encassArgs": [
+        {
+          "name": "l7.enum.option",
+          "type": "STRING",
+          "ordinal": 1,
+          "guiPrompt": true,
+          "guiLabel": "Validation Profile *"
+        },
+        {
+          "name": "l7.enum.option.path",
+          "type": "STRING",
+          "ordinal": 2,
+          "guiPrompt": true,
+          "guiLabel": "path"
+        },
+        {
+          "name": "l7.enum.option.path_and_method",
+          "type": "STRING",
+          "ordinal": 3,
+          "guiPrompt": true,
+          "guiLabel": "path_and_method"
+        },
+        {
+          "name": "l7.enum.option.request",
+          "type": "STRING",
+          "ordinal": 4,
+          "guiPrompt": true,
+          "guiLabel": "request"
+        },
+        {
+          "name": "l7.enum.option.request_strict",
+          "type": "STRING",
+          "ordinal": 5,
+          "guiPrompt": true,
+          "guiLabel": "request_strict"
+        }
+      ],
+      "encassResults": [
+        {
+          "name": "openapi.errors",
+          "type": "STRING"
+        },
+        {
+          "name": "openapi.expandedPath",
+          "type": "STRING"
+        },
+        {
+          "name": "openapi.path",
+          "type": "STRING"
+        },
+        {
+          "name": "openapi.servers",
+          "type": "STRING"
+        }
+      ],
+      "properties": [
+        {
+          "name": "allowTracing",
+          "value": "true"
+        },
+        {
+          "name": "paletteFolder",
+          "value": "customAssertions"
+        },
+        {
+          "name": "passMetricsToParent",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "goid": "f2a3b4c5d6e70819293a4b5c6d7e8f02",
+      "guid": "f2a3b4c5-d6e7-4081-9293-a4b5c6d7e8f2",
+      "name": "ValidateOpenAPISample-1.0",
+      "policyType": "FRAGMENT",
+      "enabled": true,
+      "folderPath": "/Portal Templates",
+      "soap": false,
+      "policy": {
+        "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<wsp:Policy xmlns:L7p=\"http://www.layer7tech.com/ws/policy\" xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2002/12/policy\">\n    <wsp:All wsp:Usage=\"Required\">\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"***************************************************************************************************************************\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Policy Fragment: ValidateOpenAPISample-1.0\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\" \"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Validates an incoming request against the OpenAPI specification published by the Portal in service.property.internal.apiSpec.\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"The Validation Profile drop-down (l7.enum.option) selects which combination of options is enabled on the underlying\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"&apos;Validate Against OpenAPI Document&apos; assertion. Each branch below sets every option explicitly so that the assertion&apos;s\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"full surface area is visible at a glance:\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\" \"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  OpenApiDoc                 - context variable (or URL, see UseOpenApiDocAsUrl) holding the OpenAPI 3.x spec\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  UseOpenApiDocAsUrl         - if true, treat OpenApiDoc as a URL to fetch the spec from\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  Prefix                     - prefix for output variables, e.g. ${openapi.errors}, ${openapi.path}, ${openapi.servers}\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  ValidatePath               - validate request URI matches a defined operation (disabling this disables all other checks)\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  ValidateMethod             - validate the HTTP method is allowed for the resolved path\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  ValidateHeaders            - validate request headers against header parameters in the spec\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  ValidateQueryParameters    - validate query-parameter names and types\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  ValidateBody               - validate JSON request body against the operation&apos;s schema\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  RequireSecurityCredentials - require credentials defined in the spec to be present (does not authenticate them)\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  StrictValidation           - reject undefined query parameters and additional body properties\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\" \"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Result variables (with default prefix &apos;openapi&apos;): openapi.path, openapi.expandedPath, openapi.servers, openapi.errors, openapi.errorDetails.\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"***************************************************************************************************************************\"/>\n        </L7p:CommentAssertion>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHtsNy5lbnVtLm9wdGlvbn0=\"/>\n            <L7p:VariableToSet stringValue=\"option\"/>\n        </L7p:SetVariable>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:CommentAssertion>\n                    <L7p:Comment stringValue=\"Profile: path - validate URI path only\"/>\n                </L7p:CommentAssertion>\n                <L7p:ComparisonAssertion>\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Expression1 stringValue=\"${option}\"/>\n                    <L7p:Operator operatorNull=\"null\"/>\n                    <L7p:Predicates predicates=\"included\">\n                        <L7p:item dataType=\"included\">\n                            <L7p:Type variableDataType=\"string\"/>\n                        </L7p:item>\n                        <L7p:item binary=\"included\">\n                            <L7p:CaseSensitive booleanValue=\"false\"/>\n                            <L7p:RightValue stringValue=\"path\"/>\n                        </L7p:item>\n                    </L7p:Predicates>\n                </L7p:ComparisonAssertion>\n                <L7p:OpenApi>\n                    <L7p:OpenApiDoc stringValue=\"service.property.internal.apiSpec\"/>\n                    <L7p:UseOpenApiDocAsUrl booleanValue=\"false\"/>\n                    <L7p:Prefix stringValue=\"openapi\"/>\n                    <L7p:ValidatePath booleanValue=\"true\"/>\n                    <L7p:ValidateMethod booleanValue=\"false\"/>\n                    <L7p:ValidateHeaders booleanValue=\"false\"/>\n                    <L7p:ValidateQueryParameters booleanValue=\"false\"/>\n                    <L7p:ValidateBody booleanValue=\"false\"/>\n                    <L7p:RequireSecurityCredentials booleanValue=\"false\"/>\n                    <L7p:StrictValidation booleanValue=\"false\"/>\n                </L7p:OpenApi>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:CommentAssertion>\n                    <L7p:Comment stringValue=\"Profile: path_and_method - validate URI path + HTTP method\"/>\n                </L7p:CommentAssertion>\n                <L7p:ComparisonAssertion>\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Expression1 stringValue=\"${option}\"/>\n                    <L7p:Operator operatorNull=\"null\"/>\n                    <L7p:Predicates predicates=\"included\">\n                        <L7p:item dataType=\"included\">\n                            <L7p:Type variableDataType=\"string\"/>\n                        </L7p:item>\n                        <L7p:item binary=\"included\">\n                            <L7p:CaseSensitive booleanValue=\"false\"/>\n                            <L7p:RightValue stringValue=\"path_and_method\"/>\n                        </L7p:item>\n                    </L7p:Predicates>\n                </L7p:ComparisonAssertion>\n                <L7p:OpenApi>\n                    <L7p:OpenApiDoc stringValue=\"service.property.internal.apiSpec\"/>\n                    <L7p:UseOpenApiDocAsUrl booleanValue=\"false\"/>\n                    <L7p:Prefix stringValue=\"openapi\"/>\n                    <L7p:ValidatePath booleanValue=\"true\"/>\n                    <L7p:ValidateMethod booleanValue=\"true\"/>\n                    <L7p:ValidateHeaders booleanValue=\"false\"/>\n                    <L7p:ValidateQueryParameters booleanValue=\"false\"/>\n                    <L7p:ValidateBody booleanValue=\"false\"/>\n                    <L7p:RequireSecurityCredentials booleanValue=\"false\"/>\n                    <L7p:StrictValidation booleanValue=\"false\"/>\n                </L7p:OpenApi>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:CommentAssertion>\n                    <L7p:Comment stringValue=\"Profile: request - full request validation (path, method, headers, query, body, security)\"/>\n                </L7p:CommentAssertion>\n                <L7p:ComparisonAssertion>\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Expression1 stringValue=\"${option}\"/>\n                    <L7p:Operator operatorNull=\"null\"/>\n                    <L7p:Predicates predicates=\"included\">\n                        <L7p:item dataType=\"included\">\n                            <L7p:Type variableDataType=\"string\"/>\n                        </L7p:item>\n                        <L7p:item binary=\"included\">\n                            <L7p:CaseSensitive booleanValue=\"false\"/>\n                            <L7p:RightValue stringValue=\"request\"/>\n                        </L7p:item>\n                    </L7p:Predicates>\n                </L7p:ComparisonAssertion>\n                <L7p:OpenApi>\n                    <L7p:OpenApiDoc stringValue=\"service.property.internal.apiSpec\"/>\n                    <L7p:UseOpenApiDocAsUrl booleanValue=\"false\"/>\n                    <L7p:Prefix stringValue=\"openapi\"/>\n                    <L7p:ValidatePath booleanValue=\"true\"/>\n                    <L7p:ValidateMethod booleanValue=\"true\"/>\n                    <L7p:ValidateHeaders booleanValue=\"true\"/>\n                    <L7p:ValidateQueryParameters booleanValue=\"true\"/>\n                    <L7p:ValidateBody booleanValue=\"true\"/>\n                    <L7p:RequireSecurityCredentials booleanValue=\"true\"/>\n                    <L7p:StrictValidation booleanValue=\"false\"/>\n                </L7p:OpenApi>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:CommentAssertion>\n                    <L7p:Comment stringValue=\"Profile: request_strict - full request validation in strict mode\"/>\n                </L7p:CommentAssertion>\n                <L7p:ComparisonAssertion>\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Expression1 stringValue=\"${option}\"/>\n                    <L7p:Operator operatorNull=\"null\"/>\n                    <L7p:Predicates predicates=\"included\">\n                        <L7p:item dataType=\"included\">\n                            <L7p:Type variableDataType=\"string\"/>\n                        </L7p:item>\n                        <L7p:item binary=\"included\">\n                            <L7p:CaseSensitive booleanValue=\"false\"/>\n                            <L7p:RightValue stringValue=\"request_strict\"/>\n                        </L7p:item>\n                    </L7p:Predicates>\n                </L7p:ComparisonAssertion>\n                <L7p:OpenApi>\n                    <L7p:OpenApiDoc stringValue=\"service.property.internal.apiSpec\"/>\n                    <L7p:UseOpenApiDocAsUrl booleanValue=\"false\"/>\n                    <L7p:Prefix stringValue=\"openapi\"/>\n                    <L7p:ValidatePath booleanValue=\"true\"/>\n                    <L7p:ValidateMethod booleanValue=\"true\"/>\n                    <L7p:ValidateHeaders booleanValue=\"true\"/>\n                    <L7p:ValidateQueryParameters booleanValue=\"true\"/>\n                    <L7p:ValidateBody booleanValue=\"true\"/>\n                    <L7p:RequireSecurityCredentials booleanValue=\"true\"/>\n                    <L7p:StrictValidation booleanValue=\"true\"/>\n                </L7p:OpenApi>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:AuditDetailAssertion>\n                    <L7p:Detail stringValue=\"*** OpenAPI validation failed for profile &apos;${option}&apos;: ${openapi.errorDetails}\"/>\n                </L7p:AuditDetailAssertion>\n                <L7p:CustomizeErrorResponse>\n                    <L7p:Content stringValueReference=\"inline\"><![CDATA[{\n  \"error\": {\n    \"code\": 500,\n    \"message\": \"OpenAPI spec validation failed. Profile: ${option}\"\n  }\n}]]></L7p:Content>\n                    <L7p:ContentType stringValue=\"application/json; charset=UTF-8\"/>\n                    <L7p:ExtraHeaders nameValuePairArray=\"included\"/>\n                </L7p:CustomizeErrorResponse>\n                <L7p:FalseAssertion/>\n            </wsp:All>\n        </wsp:OneOrMore>\n    </wsp:All>\n</wsp:Policy>\n"
+      }
+    }
+  ],
+  "properties": {
+    "meta": {
+      "name": "ValidateOpenAPISample-1.0 Bundle",
+      "schema": "11.2.1"
+    },
+    "defaultAction": "NEW_OR_UPDATE"
+  }
+}
