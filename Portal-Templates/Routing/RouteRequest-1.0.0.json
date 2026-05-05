@@ -5,7 +5,7 @@
       "guid": "a1b2c3d4-e5f6-4071-8293-a4b5c6d7e8f9",
       "name": "RouteRequest-1.0",
       "checksum": "119e2c29a48397970e3fb9ef3123cb4741c5380a",
-      "description": "Backend routing fragment. Performs the Route via HTTP assertion to forward the incoming request to the backend API location, sets override_template_routing=true so a parent template skips its own routing, and captures the backend response code in portal.analytics.responseCode. Both variables are exported via the Export Variables from Fragment assertion.",
+      "description": "Backend routing fragment. Performs the Route via HTTP assertion to forward the incoming request to the backend API location and captures the backend response code.",
       "policyName": "RouteRequest-1.0",
       "encassArgs": [
         {
