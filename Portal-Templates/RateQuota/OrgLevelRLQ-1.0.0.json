@@ -1,0 +1,108 @@
+{
+  "encassConfigs": [
+    {
+      "goid": "aabbccdd0011223344556677889900aa",
+      "guid": "aabbccdd-0011-4022-bb33-44556677889a",
+      "name": "OrgLevelRLQ-1.0",
+      "description": "Enforces Organization-level Rate Limit and Quota for a Portal-managed API. Organization Rate Limit and Quota was formerly known as Account Plan. NOTE: this enforcement is currently NOT performed by the system-provided Standard RateQuota policy templates that ship with the Portal -- those templates only enforce per-API rate/quota. Until the system templates are updated to cover the per-Organization scope, this additional bundle must be applied as a Portal policy template whenever you need to enforce rate and quota at the per-Organization level. This bundle is intended for use when the Standard system templates are NOT used and should be placed AFTER any template that performs an API key lookup (e.g. APIKeyValidation-1.0): the API key lookup is assumed to have already been done and its apiKeyRecord.* outputs are wired in as inputs to this template. Internally the bundle includes the auto-generated Account Plans Fragment (system policy GUID f8a5669d-831e-4417-9225-f52527f90323), then short-circuits with a 503 response and populates portal.analytics.* if the rate/quota is exceeded.",
+      "policyName": "OrgLevelRLQ-1.0",
+      "encassArgs": [
+        {
+          "name": "apiKeyRecord.id",
+          "type": "STRING",
+          "ordinal": 1,
+          "guiPrompt": false
+        },
+        {
+          "name": "apiKeyRecord.key",
+          "type": "STRING",
+          "ordinal": 2,
+          "guiPrompt": false
+        },
+        {
+          "name": "apiKeyRecord.plan",
+          "type": "STRING",
+          "ordinal": 3,
+          "guiPrompt": false
+        },
+        {
+          "name": "apiKeyRecord.accountPlanMappingId",
+          "type": "STRING",
+          "ordinal": 4,
+          "guiPrompt": false
+        },
+        {
+          "name": "apiKeyRecord.accountPlanMappingName",
+          "type": "STRING",
+          "ordinal": 5,
+          "guiPrompt": false
+        }
+      ],
+      "encassResults": [
+        {
+          "name": "apiAuthz",
+          "type": "STRING"
+        },
+        {
+          "name": "apiAuthzDetails",
+          "type": "STRING"
+        },
+        {
+          "name": "errorMsg",
+          "type": "STRING"
+        },
+        {
+          "name": "portal.analytics.apikey",
+          "type": "STRING"
+        },
+        {
+          "name": "portal.analytics.organization.name",
+          "type": "STRING"
+        },
+        {
+          "name": "portal.analytics.organization.uuid",
+          "type": "STRING"
+        },
+        {
+          "name": "portal.analytics.response.code",
+          "type": "STRING"
+        }
+      ],
+      "properties": [
+        {
+          "name": "allowTracing",
+          "value": "false"
+        },
+        {
+          "name": "paletteFolder",
+          "value": "internalAssertions"
+        },
+        {
+          "name": "passMetricsToParent",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "goid": "bbccdd001122334455667788990011bb",
+      "guid": "bbccdd00-1122-4334-bb55-66778899001b",
+      "name": "OrgLevelRLQ-1.0",
+      "policyType": "FRAGMENT",
+      "enabled": true,
+      "folderPath": "/Portal Templates",
+      "soap": false,
+      "policy": {
+        "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<wsp:Policy xmlns:L7p=\"http://www.layer7tech.com/ws/policy\" xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2002/12/policy\">\n    <wsp:All wsp:Usage=\"Required\">\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"======================================================================\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Policy Fragment: OrgLevelRLQ-1.0\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\" \"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Organization-level Rate Limit and Quota enforcement (formerly known as\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Account Plan) for Portal-managed APIs. Extracted from the legacy\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Standard Policy Template - API Key so it can be composed with the\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"per-bundle Authentication templates in Portal-Templates/Authentication.\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\" \"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Pre-requisites:\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  1. The gateway is enrolled with the Layer7 API Developer Portal.\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  2. Account Plans (Organization Rate Limit and Quota) are configured\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"     so that the auto-generated Account Plans Fragment (system policy\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"     GUID f8a5669d-831e-4417-9225-f52527f90323) exists on the gateway.\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"  3. An API key lookup template (e.g. APIKeyValidation-1.0) has run\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"     so that apiKeyRecord.* are populated and wired in as inputs.\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"======================================================================\"/>\n        </L7p:CommentAssertion>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Step 0 -- Initialise working variables consumed by the rate/quota check.\"/>\n        </L7p:CommentAssertion>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"dHJ1ZQ==\"/>\n            <L7p:VariableToSet stringValue=\"apiAuthz\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"\"/>\n            <L7p:VariableToSet stringValue=\"apiAuthzDetails\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"\"/>\n            <L7p:VariableToSet stringValue=\"errorMsg\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQua2V5fQ==\"/>\n            <L7p:VariableToSet stringValue=\"apiKey\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQucGxhbn0=\"/>\n            <L7p:VariableToSet stringValue=\"apiPlan\"/>\n        </L7p:SetVariable>\n        <L7p:SetVariable>\n            <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuYWNjb3VudFBsYW5NYXBwaW5nSWR9\"/>\n            <L7p:VariableToSet stringValue=\"accountPlanMappingId\"/>\n        </L7p:SetVariable>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Step 1 -- Run the auto-generated Account Plans Fragment (system policy).\"/>\n        </L7p:CommentAssertion>\n        <L7p:Include>\n            <L7p:PolicyGuid stringValue=\"f8a5669d-831e-4417-9225-f52527f90323\"/>\n        </L7p:Include>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Step 2 -- Branch on apiAuthz; populate analytics (success or failure).\"/>\n        </L7p:CommentAssertion>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:ComparisonAssertion>\n                    <L7p:CaseSensitive booleanValue=\"false\"/>\n                    <L7p:Expression1 stringValue=\"${apiAuthz}\"/>\n                    <L7p:Operator operatorNull=\"null\"/>\n                    <L7p:Predicates predicates=\"included\">\n                        <L7p:item dataType=\"included\">\n                            <L7p:Type variableDataType=\"string\"/>\n                        </L7p:item>\n                        <L7p:item binary=\"included\">\n                            <L7p:CaseSensitive booleanValue=\"false\"/>\n                            <L7p:RightValue stringValue=\"true\"/>\n                        </L7p:item>\n                    </L7p:Predicates>\n                </L7p:ComparisonAssertion>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthY2NvdW50UGxhbk1hcHBpbmdJZH0=\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.organization.uuid\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuYWNjb3VudFBsYW5NYXBwaW5nTmFtZX0=\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.organization.name\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuaWR9\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.apikey\"/>\n                </L7p:SetVariable>\n            </wsp:All>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"UmF0ZSBsaW1pdCBhbmQvb3IgcXVvdGEgZXhjZWVkZWQuIFNlZSByZWFzb24gYmVsb3cuDQoNClJlYXNvbjogJHthcGlBdXRoekRldGFpbHN9\"/>\n                    <L7p:VariableToSet stringValue=\"errorMsg\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"NTAz\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.response.code\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthY2NvdW50UGxhbk1hcHBpbmdJZH0=\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.organization.uuid\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuYWNjb3VudFBsYW5NYXBwaW5nTmFtZX0=\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.organization.name\"/>\n                </L7p:SetVariable>\n                <L7p:SetVariable>\n                    <L7p:Base64Expression stringValue=\"JHthcGlLZXlSZWNvcmQuaWR9\"/>\n                    <L7p:VariableToSet stringValue=\"portal.analytics.apikey\"/>\n                </L7p:SetVariable>\n            </wsp:All>\n        </wsp:OneOrMore>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Step 3 -- Export all Step 2 outputs to the parent policy.\"/>\n        </L7p:CommentAssertion>\n        <L7p:ExportVariables>\n            <L7p:ExportedVars stringArrayValue=\"included\">\n                <L7p:item stringValue=\"apiAuthz\"/>\n                <L7p:item stringValue=\"apiAuthzDetails\"/>\n                <L7p:item stringValue=\"errorMsg\"/>\n                <L7p:item stringValue=\"portal.analytics.apikey\"/>\n                <L7p:item stringValue=\"portal.analytics.organization.name\"/>\n                <L7p:item stringValue=\"portal.analytics.organization.uuid\"/>\n                <L7p:item stringValue=\"portal.analytics.response.code\"/>\n            </L7p:ExportedVars>\n        </L7p:ExportVariables>\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Step 4 -- If errorMsg is non-empty, return 503 and fail the fragment.\"/>\n        </L7p:CommentAssertion>\n        <wsp:OneOrMore wsp:Usage=\"Required\">\n            <L7p:ComparisonAssertion>\n                <L7p:CaseSensitive booleanValue=\"false\"/>\n                <L7p:Expression1 stringValue=\"${errorMsg}\"/>\n                <L7p:Operator operatorNull=\"null\"/>\n                <L7p:Predicates predicates=\"included\">\n                    <L7p:item dataType=\"included\">\n                        <L7p:Type variableDataType=\"string\"/>\n                    </L7p:item>\n                    <L7p:item binary=\"included\">\n                        <L7p:Operator operator=\"EMPTY\"/>\n                        <L7p:RightValue stringValue=\"\"/>\n                    </L7p:item>\n                </L7p:Predicates>\n            </L7p:ComparisonAssertion>\n            <wsp:All wsp:Usage=\"Required\">\n                <L7p:CustomizeErrorResponse>\n                    <L7p:Content stringValue=\"${errorMsg}\"/>\n                    <L7p:ExtraHeaders nameValuePairArray=\"included\"/>\n                    <L7p:HttpStatus stringValue=\"503\"/>\n                </L7p:CustomizeErrorResponse>\n                <L7p:FalseAssertion/>\n            </wsp:All>\n        </wsp:OneOrMore>\n    </wsp:All>\n</wsp:Policy>\n"
+      }
+    }
+  ],
+  "properties": {
+    "meta": {
+      "name": "OrgLevelRLQ-1.0 Bundle",
+      "schema": "11.2.1"
+    },
+    "defaultAction": "NEW_OR_UPDATE"
+  }
+}
