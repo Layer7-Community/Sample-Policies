@@ -17,8 +17,9 @@ This folder contains a collection of example **policy template bundles** that ca
 
 | Folder | Description |
 | --- | --- |
-| [`Authentication/`](./Authentication) | Template bunldes that authenticate the caller against a Portal-managed API. Includes API key (header/query), API key + secret (HTTP Basic, with hashed-secret support), OAuth 2.0 access-token, and mutual-TLS (client certificate) variants. |
-| [`Routing/`](./Routing) | Template bundles that demonstrate Portal-aware routing patterns (e.g. backend selection, header rewriting, environment-based routing). Currently empty — bundles will be added here as they are published. |
+| [`Authentication/`](./Authentication) | Template bundles that authenticate the caller against a Portal-managed API. Includes API key (header/query), API key + secret (HTTP Basic, with hashed-secret support), OAuth 2.0 access-token, and mutual-TLS (client certificate) variants. |
+| [`DropDown/`](./DropDown) | Template bundles that demonstrate the Portal **drop-down selection field** capability — the `l7.enum.<name>` / `l7.enum.<name>.<value>` argument-naming convention that turns a free-form template input into a drop-down menu in the Portal UI. Useful as a starting point for any template that needs the publisher to choose from a fixed set of options (e.g. environment, region, plan tier). |
+| [`Routing/`](./Routing) | Template bundles that demonstrate Portal-aware routing patterns. Currently includes `RouteRequest-1.0.0.json`, which performs the **Route via HTTP** assertion against an `apiLocation` argument, strips the API's `serviceUrl` prefix from the request URI, and exports routing-outcome variables (`override_template_routing`, `portal.analytics.response.code`) for a parent template to consume. |
 
 
 ## More information

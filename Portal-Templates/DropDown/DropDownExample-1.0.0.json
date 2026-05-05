@@ -1,0 +1,72 @@
+{
+  "encassConfigs": [
+    {
+      "goid": "71d77fe05ae090b0eef8b139cb4099fe",
+      "guid": "84ff9c01-c099-4be8-8fdf-6c4a8da4ab66",
+      "name": "DropDownExample-1.0",
+      "checksum": "ae5ea3ae97b4416aca9cd14ff5cd9c167b5c9952",
+      "description": "Demonstrates how to expose a drop-down selection field in the Layer7 API Developer Portal. Defines a primary input (l7.enum.example) plus per-option inputs (l7.enum.example.A, l7.enum.example.B) following the l7.enum.<name>/l7.enum.<name>.<value> naming convention so that publishers see a drop-down menu instead of a free-form text field when applying the template to an API. The selected value is available inside the fragment as ${l7.enum.example}.",
+      "policyName": "DropDownExample-1.0",
+      "encassArgs": [
+        {
+          "name": "l7.enum.example",
+          "type": "STRING",
+          "ordinal": 1,
+          "guiPrompt": true,
+          "guiLabel": "Main field for the example"
+        },
+        {
+          "name": "l7.enum.example.A",
+          "type": "STRING",
+          "ordinal": 2,
+          "guiPrompt": true,
+          "guiLabel": "A value "
+        },
+        {
+          "name": "l7.enum.example.B",
+          "type": "STRING",
+          "ordinal": 3,
+          "guiPrompt": true,
+          "guiLabel": "B value"
+        }
+      ],
+      "encassResults": [],
+      "properties": [
+        {
+          "name": "allowTracing",
+          "value": "false"
+        },
+        {
+          "name": "paletteFolder",
+          "value": "policyLogic"
+        },
+        {
+          "name": "passMetricsToParent",
+          "value": "false"
+        }
+      ]
+    }
+  ],
+  "policies": [
+    {
+      "goid": "71d77fe05ae090b0eef8b139cb409993",
+      "guid": "b57993c3-e8d2-48e2-a488-d2a0aadd3532",
+      "name": "DropDownExample-1.0",
+      "policyType": "FRAGMENT",
+      "checksum": "1a1557405cb366dfe88d2b3a32a0fc10127cd268",
+      "enabled": true,
+      "folderPath": "/Portal Templates",
+      "soap": false,
+      "policy": {
+        "xml": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<wsp:Policy xmlns:L7p=\"http://www.layer7tech.com/ws/policy\" xmlns:wsp=\"http://schemas.xmlsoap.org/ws/2002/12/policy\">\n    <wsp:All wsp:Usage=\"Required\">\n        <L7p:CommentAssertion>\n            <L7p:Comment stringValue=\"Policy Fragment: DropDownExample-1.0\"/>\n        </L7p:CommentAssertion>\n    </wsp:All>\n</wsp:Policy>\n"
+      }
+    }
+  ],
+  "properties": {
+    "meta": {
+      "name": "DropDownExample-1.0 Bundle",
+      "schema": "11.2.1"
+    },
+    "defaultAction": "NEW_OR_UPDATE"
+  }
+}
